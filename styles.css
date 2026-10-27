@@ -1,3 +1,41 @@
 body {
     background-color: #000000;
+    
+}
+
+
+.lighthead {
+    color: #f7f9e3;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.basicButton {
+    display: inline-block;
+    width: fit-content; 
+    margin: 0 auto;
+    padding: 2.5px 2.5px;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    background-color: rgb(139, 139, 139);
+    border-left: 3px solid rgb(46, 46, 46);
+    border-bottom: 3px solid rgb(46, 46, 46);
+}
+
+.world {
+    background-color: rgb(114, 114, 250);
+    color: rgb(0, 0, 0);
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 auto;
+    position: relative;
+    padding: 2.5px 2.5px;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    background-color: rgb(139, 139, 139);
+    border-left: 3px solid rgb(46, 46, 46);
+    border-bottom: 3px solid rgb(46, 46, 46);
 }
