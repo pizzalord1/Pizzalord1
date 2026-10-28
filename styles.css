@@ -1,5 +1,6 @@
 body {
-    background-color: #000000;
+    background-color: rgb(0, 128, 128);
+    color: rgb(255, 255, 255);
 }
 
 *,
@@ -26,6 +27,12 @@ body {
     background-color: rgb(139, 139, 139);
     border-left: 3px solid rgb(46, 46, 46);
     border-bottom: 3px solid rgb(46, 46, 46);
+}
+
+.links a {
+    display: block;
+    margin: 22px 0;
+    text-decoration: none;
 }
 
 .hero-box {
