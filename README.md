@@ -1,6 +1,6 @@
 ## Hi there 👋
 
-Access the webpage GitHub pages version through this link: https://pizzalord1.github.io/Pizzalord1/
+Access the GitHub pages version of it through this link: https://pizzalord1.github.io/Pizzalord1/
 
 <!--
 **pizzalord1/Pizzalord1** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
