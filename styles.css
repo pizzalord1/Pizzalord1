@@ -17,6 +17,10 @@ body {
     margin-top: 20px;
 }
 
+.lime-green {
+    color: limegreen;
+}
+
 .basicButton {
     display: inline-block;
     width: fit-content; 
@@ -27,6 +31,7 @@ body {
     background-color: rgb(139, 139, 139);
     border-left: 3px solid rgb(46, 46, 46);
     border-bottom: 3px solid rgb(46, 46, 46);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
 .links a {
