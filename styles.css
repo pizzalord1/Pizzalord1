@@ -1,8 +1,12 @@
 body {
     background-color: #000000;
-    
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
 
 .lighthead {
     color: #f7f9e3;
@@ -30,7 +34,8 @@ body {
     text-align: center;
     margin: 0 auto;
     position: relative;
-    width: 1000px;
+    width: 100%;
+    max-width: 1000px;
     padding: 2.5px 2.5px;
     border-radius: 10px;
     background-color: rgb(139, 139, 139);
@@ -42,4 +47,46 @@ body {
     font-size: 24px;
     font-weight: bold;
     margin: 0 auto;
+}
+
+img,
+iframe {
+    max-width: 100%;
+}
+
+.website-photo {
+    display: block;
+    width: 100%;
+    max-width: 512px;
+    height: auto;
+    margin: 0 auto 10px;
+    object-fit: cover;
+}
+
+pre {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 1rem;
+    }
+
+    .lighthead,
+    .world {
+        font-size: clamp(1.25rem, 6vw, 1.5rem);
+    }
+
+    .basicButton,
+    .links a {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
+
+    .spotify-embed iframe {
+        display: block;
+        width: 100%;
+        height: 352px;
+    }
 }
