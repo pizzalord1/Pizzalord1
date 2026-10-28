@@ -24,19 +24,22 @@ body {
     border-bottom: 3px solid rgb(46, 46, 46);
 }
 
-.world {
+.hero-box {
     background-color: rgb(114, 114, 250);
     color: rgb(0, 0, 0);
-    font-size: 24px;
-    font-weight: bold;
     text-align: center;
     margin: 0 auto;
     position: relative;
     width: 1000px;
     padding: 2.5px 2.5px;
-    color: rgb(0, 0, 0);
     border-radius: 10px;
     background-color: rgb(139, 139, 139);
     border-left: 3px solid rgb(46, 46, 46);
     border-bottom: 3px solid rgb(46, 46, 46);
+}
+
+.world {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 auto;
 }
