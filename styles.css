@@ -115,6 +115,10 @@ pre {
         gap: 1rem;
     }
 
+    .hero-box + .links {
+        margin-top: 1rem;
+    }
+
     .links a {
         display: flex;
         align-items: center;
