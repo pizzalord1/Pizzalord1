@@ -41,6 +41,18 @@ body {
     text-decoration: none;
 }
 
+.site-footer {
+    margin: 3rem auto 0;
+    padding: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.site-footer h2,
+.site-footer p {
+    margin: 0.5rem 0;
+}
+
 .hero-box {
     background-color: rgb(114, 114, 250);
     color: rgb(0, 0, 0);
