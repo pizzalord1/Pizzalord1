@@ -165,6 +165,17 @@ pre {
     overflow-wrap: anywhere;
 }
 
+.youtube-link {
+    gap: 0.5rem;
+}
+
+.social-link-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    flex: none;
+}
+
 .socials-note {
     margin: 0;
     text-align: center;
