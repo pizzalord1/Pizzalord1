@@ -27,7 +27,7 @@ const navigateToTourStep = (step) => {
 
 	window.setTimeout(() => {
 		window.location.assign(destination.href);
-	}, 100);
+	}, 1000);
 };
 
 if (surpriseButton) {
