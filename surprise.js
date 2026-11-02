@@ -1,24 +1,68 @@
 'use strict';
 
-const reloadsRemainingKey = 'accessDeniedSurpriseReloadsRemaining';
+const expectedPageKey = 'accessDeniedSurpriseExpectedPage';
+const tourPages = [
+	'socials.html',
+	'Shit.html',
+	'linkshrub.html',
+	'Minecraft Worlds.html',
+	'AboutMe.html',
+	'access-denied.html'
+];
 const surpriseButton = document.getElementById('surprise');
+const currentPage = decodeURIComponent(window.location.pathname.split('/').pop());
+
+const clearTour = () => {
+	sessionStorage.removeItem(expectedPageKey);
+};
+
+const schedulePageNavigation = (targetPage, sourcePage) => {
+	sessionStorage.setItem(expectedPageKey, targetPage);
+	window.setTimeout(() => {
+		if (
+			sessionStorage.getItem(expectedPageKey) !== targetPage
+			|| decodeURIComponent(window.location.pathname.split('/').pop()) !== sourcePage
+		) {
+			clearTour();
+			return;
+		}
+
+		window.location.assign(targetPage);
+	}, 100);
+};
 
 if (surpriseButton) {
 	surpriseButton.addEventListener('click', () => {
-		sessionStorage.setItem(reloadsRemainingKey, '9');
-		window.location.reload();
+		if (sessionStorage.getItem(expectedPageKey) !== null) {
+			return;
+		}
+
+		schedulePageNavigation(tourPages[0], currentPage);
 	});
 }
 
-const storedReloadsRemaining = sessionStorage.getItem(reloadsRemainingKey);
+const expectedPage = sessionStorage.getItem(expectedPageKey);
 
-if (storedReloadsRemaining !== null) {
-	const reloadsRemaining = Number(storedReloadsRemaining);
+if (expectedPage !== null) {
+	const handlePageLoad = () => {
+		if (currentPage !== expectedPage) {
+			clearTour();
+			return;
+		}
 
-	if (Number.isInteger(reloadsRemaining) && reloadsRemaining > 0) {
-		sessionStorage.setItem(reloadsRemainingKey, String(reloadsRemaining - 1));
-		window.location.reload();
+		const currentTourIndex = tourPages.indexOf(expectedPage);
+
+		if (currentTourIndex === -1 || currentTourIndex === tourPages.length - 1) {
+			clearTour();
+			return;
+		}
+
+		schedulePageNavigation(tourPages[currentTourIndex + 1], currentPage);
+	};
+
+	if (document.readyState === 'complete') {
+		handlePageLoad();
 	} else {
-		sessionStorage.removeItem(reloadsRemainingKey);
+		window.addEventListener('load', handlePageLoad, { once: true });
 	}
 }
