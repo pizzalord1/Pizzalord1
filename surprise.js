@@ -11,7 +11,10 @@ const tourPages = [
 const tourKey = 'surprise-tour';
 const tourStepKey = 'surprise-tour-step';
 const surpriseButton = document.getElementById('surprise');
-const currentPage = decodeURIComponent(window.location.pathname.split('/').pop());
+const getPageName = (path) => (
+	decodeURIComponent(path.split('/').filter(Boolean).pop() || '').replace(/\.html$/i, '')
+);
+const currentPage = getPageName(window.location.pathname);
 const currentUrl = new URL(window.location.href);
 
 const removeTourFromUrl = () => {
@@ -49,7 +52,7 @@ if (currentUrl.searchParams.get(tourKey) === '1') {
 		|| !Number.isInteger(step)
 		|| step < 0
 		|| step >= tourPages.length
-		|| tourPages[step] !== currentPage
+		|| getPageName(tourPages[step]) !== currentPage
 	) {
 		removeTourFromUrl();
 	} else {
