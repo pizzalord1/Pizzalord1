@@ -41,6 +41,12 @@ body {
     cursor: pointer;
 }
 
+.backButton {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
 .links a {
     display: block;
     margin: 22px 0;
