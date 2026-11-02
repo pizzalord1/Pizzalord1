@@ -30,7 +30,7 @@ const navigateToTourStep = (step) => {
 
 	window.setTimeout(() => {
 		window.location.assign(destination.href);
-	}, 1000);
+	}, 100);
 };
 
 if (surpriseButton) {
