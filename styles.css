@@ -35,6 +35,12 @@ body {
     text-decoration: none;
 }
 
+.surprise-button {
+    display: block;
+    font: inherit;
+    cursor: pointer;
+}
+
 .links a {
     display: block;
     margin: 22px 0;
