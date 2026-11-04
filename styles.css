@@ -113,6 +113,83 @@ iframe {
     border-radius: 8px;
 }
 
+.photo-trigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: zoom-in;
+}
+
+.photo-trigger:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: -3px;
+}
+
+.photo-description-dialog {
+    width: min(90vw, 56rem);
+    max-height: 90vh;
+    padding: 0;
+    color: #fff;
+    background: rgba(25, 25, 25, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    border-radius: 12px;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.45);
+    overflow-y: auto;
+}
+
+.photo-description-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.65);
+}
+
+.photo-description-content {
+    padding: 1.5rem;
+}
+
+.photo-description-content form {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.photo-description-close {
+    min-height: 44px;
+    font: inherit;
+    margin: 0;
+}
+
+.photo-description-close:focus-visible {
+    outline: 3px solid #65b7ff;
+    outline-offset: 3px;
+}
+
+.photo-description-content p {
+    margin: 0;
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.photo-description-image {
+    display: block;
+    width: 100%;
+    max-height: 65vh;
+    margin: 0 auto 1rem;
+    object-fit: contain;
+}
+
+.photo-description-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+}
+
+.photo-description-actions .basicButton {
+    margin: 0;
+}
+
 pre {
     max-width: 100%;
     overflow-x: auto;
