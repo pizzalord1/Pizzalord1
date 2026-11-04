@@ -60,6 +60,18 @@ body {
     text-decoration: none;
 }
 
+.home-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.home-links a {
+    margin: 0;
+}
+
 .site-footer {
     margin: 3rem auto 0;
     padding: 1rem;
