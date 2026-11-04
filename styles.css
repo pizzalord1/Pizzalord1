@@ -306,6 +306,22 @@ pre {
     flex: none;
 }
 
+.discord-status {
+    width: 100%;
+    text-align: center;
+}
+
+.discord-status h2 {
+    margin: 0 0 0.5rem;
+}
+
+.discord-status-iframe {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    border: 0;
+}
+
 .socials-note {
     margin: 0;
     text-align: center;
