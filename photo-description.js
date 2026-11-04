@@ -1,7 +1,6 @@
 const photoDialog = document.querySelector("#photoDescriptionDialog");
 const photoDescription = document.querySelector("#photoDescription");
 const photoDescriptionImage = document.querySelector("#photoDescriptionImage");
-const photoFullSizeLink = document.querySelector("#photoFullSizeLink");
 const photoDownloadLink = document.querySelector("#photoDownloadLink");
 
 document.querySelectorAll(".photo-trigger").forEach((trigger) => {
@@ -13,7 +12,6 @@ document.querySelectorAll(".photo-trigger").forEach((trigger) => {
         photoDescription.textContent = photo.alt;
         photoDescriptionImage.src = photoUrl;
         photoDescriptionImage.alt = photo.alt;
-        photoFullSizeLink.href = photoUrl;
         photoDownloadLink.href = photoUrl;
         photoDownloadLink.download = photoFilename;
         photoDialog.showModal();
