@@ -11,6 +11,7 @@
    <meta property="og:description" content="This is my website. Download my minecraft worlds here, and view my socials.">
    <meta property="og:image" content="https://pizzalord.online/IMG_2094.JPG">
    <meta property="og:image:alt" content="Nigel the cat">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
    <link rel="stylesheet" href="styles.css">
    <title>Pizzalord</title>
    <link rel="icon" href="IMG_2094.JPG" type="image/x-icon">
@@ -19,13 +20,41 @@
 
 <body>
    <div class="hero-box">
-       <img class="website-photo" src="IMG_2094.JPG" alt="Nigel the cat" width="100" height="300" style="border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.25); padding: 25px;">
+       <div id="catPhotoCarousel" class="carousel slide website-carousel" data-bs-ride="carousel" data-bs-interval="5000">
+           <div class="carousel-indicators">
+               <button type="button" data-bs-target="#catPhotoCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+               <button type="button" data-bs-target="#catPhotoCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+               <button type="button" data-bs-target="#catPhotoCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+           </div>
+           <div class="carousel-inner">
+               <div class="carousel-item active">
+                   <img class="website-photo" src="IMG_4303.JPG" alt="Nigel">
+               </div>
+               <div class="carousel-item">
+                   <img class="website-photo" src="IMG_6398.JPG" alt="Junior">
+               </div>
+               <div class="carousel-item">
+                   <img class="website-photo" src="IMG_2094.JPG" alt="omelette">
+               </div>
+               <div class="carousel-item active">
+                   <img class="website-photo" src="IMG_4303.JPG" alt="Nigel">
+               </div>
+           </div>
+           <button class="carousel-control-prev" type="button" data-bs-target="#catPhotoCarousel" data-bs-slide="prev">
+               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+               <span class="visually-hidden">Previous</span>
+           </button>
+           <button class="carousel-control-next" type="button" data-bs-target="#catPhotoCarousel" data-bs-slide="next">
+               <span class="carousel-control-next-icon" aria-hidden="true"></span>
+               <span class="visually-hidden">Next</span>
+           </button>
+       </div>
        <h1 class="world">Welcome to Pizzalord.online</h1>
    </div>
   
    <div class="links">
-       <a class="basicButton" href="AboutMe.html" >This is to my about me</a>
-       <a class="basicButton" href="Minecraft Worlds.html" >My Minecraft World</a>
+       <a class="basicButton" href="AboutMe.html" >About me</a>
+       <a class="basicButton" href="Minecraft Worlds.html" >Download my Minecraft World</a>
    <a class="basicButton" href="linkshrub.html" >Link.shrub /!\ under construction /!\</a>
     <a class="basicButton" href="access-denied.html" style="color: rgb(117, 0, 0);">Access Denied</a>
        <a class="basicButton" href="socials.html" >My socials</a>
@@ -35,8 +64,8 @@
    </div>
 
     <footer class="site-footer" style="color: black;">
-       <h2><b></p>Credits </b></h2>
-       <p>2026 by Xavier</p>
+       <p><b>2026 by Xavier</b></p>
    </footer>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
