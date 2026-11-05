@@ -35,16 +35,19 @@
          </a>
          <section class="discord-status">
   <h2>Discord Status</h2>
-  <iframe
-    class="discord-status-iframe"
-    src="https://status.pizzalord.online/"
-    title="Discord status"
-    width="100%"
-    height="80"
-    loading="lazy"
-    scrolling="no"
-    frameborder="0">
-  </iframe>
+  <div class="discord-status-trigger-wrap">
+    <iframe
+      class="discord-status-iframe"
+      src="https://status.pizzalord.online/"
+      title="Discord status"
+      width="100%"
+      height="80"
+      loading="lazy"
+      scrolling="no"
+      frameborder="0">
+    </iframe>
+    <button class="discord-status-trigger" type="button" aria-label="Show Discord contact details"></button>
+  </div>
 </section>
 
 
@@ -52,6 +55,16 @@
       </nav>
       <p class="world socials-note">Will add more later....</p>
    </main>
+   <dialog class="discord-contact-dialog" id="discordContactDialog" aria-labelledby="discordContactTitle">
+      <button class="basicButton discord-contact-back" type="button" aria-label="Back">Back</button>
+      <h2 id="discordContactTitle">add me on discord:</h2>
+      <div class="discord-contact-copy-row">
+         <input id="discordUsername" type="text" value="pizzasgrave" readonly aria-label="Discord username">
+         <button class="basicButton" id="copyDiscordUsername" type="button">Copy</button>
+      </div>
+      <p class="discord-contact-copy-status" id="discordCopyStatus" aria-live="polite"></p>
+   </dialog>
+   <script src="socials.js"></script>
    <script src="surprise.js?v=5"></script>
 </body>
 </html>

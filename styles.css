@@ -314,6 +314,10 @@ pre {
     background-color: #7a7a7a;
 }
 
+.discord-status-trigger-wrap {
+    position: relative;
+}
+
 .discord-status h2 {
     margin: 0 0 0.5rem;
 }
@@ -336,6 +340,75 @@ pre {
 
 .discord-status-iframe::-webkit-scrollbar {
     display: none;
+}
+
+.discord-status-trigger {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.discord-status-trigger:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: -3px;
+}
+
+.discord-contact-dialog {
+    position: fixed;
+    width: min(90vw, 24rem);
+    padding: 1.5rem;
+    color: #fff;
+    background: rgba(25, 25, 25, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    border-radius: 12px;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+}
+
+.discord-contact-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.discord-contact-back {
+    display: block;
+    margin: 0 0 1rem auto;
+    font: inherit;
+}
+
+.discord-contact-dialog h2 {
+    margin: 0 0 1rem;
+    font-size: 1.25rem;
+}
+
+.discord-contact-copy-row {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.discord-contact-copy-row input {
+    min-width: 0;
+    flex: 1;
+    padding: 0.65rem;
+    color: #fff;
+    font: inherit;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+}
+
+.discord-contact-copy-row .basicButton {
+    margin: 0;
+    font: inherit;
+}
+
+.discord-contact-copy-status {
+    min-height: 1.5em;
+    margin: 0.75rem 0 0;
 }
 
 .socials-note {
