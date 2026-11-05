@@ -370,8 +370,42 @@ pre {
     backdrop-filter: blur(8px);
 }
 
+.discord-contact-dialog[open] {
+    animation: discord-contact-appear 220ms ease-out both;
+}
+
 .discord-contact-dialog::backdrop {
     background: rgba(0, 0, 0, 0.4);
+    animation: discord-contact-backdrop-appear 220ms ease-out both;
+}
+
+@keyframes discord-contact-appear {
+    from {
+        opacity: 0;
+        transform: translateY(0.75rem) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes discord-contact-backdrop-appear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .discord-contact-dialog[open],
+    .discord-contact-dialog::backdrop {
+        animation: none;
+    }
 }
 
 .discord-contact-back {
