@@ -181,6 +181,15 @@ iframe {
     font-size: clamp(1.25rem, 4vw, 1.75rem);
     line-height: 1.5;
     overflow-wrap: anywhere;
+    font-weight: 400;
+}
+
+.photo-description-secondary {
+    margin-top: 0.75rem;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
 }
 
 .photo-description-image {
