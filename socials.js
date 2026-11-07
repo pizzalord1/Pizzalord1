@@ -23,9 +23,9 @@ discordContactDialog.addEventListener("click", (event) => {
 copyDiscordUsername.addEventListener("click", async () => {
     try {
         await navigator.clipboard.writeText(discordUsername.value);
-        discordCopyStatus.textContent = "Copied";
+        discordCopyStatus.textContent = "copied";
     } catch {
         discordUsername.select();
-        discordCopyStatus.textContent = "Copy failed. Select the text box to copy it manually";
+        discordCopyStatus.textContent = "copy failed, please try again later";
     }
 });
