@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A simple moving ball Processing project, recreated in HTML.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="IMG_2094.JPG" type="image/x-icon">
+    <title>Moving Ball</title>
+    <style>
+        .moving-ball-page {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .moving-ball-content {
+            width: min(100%, 400px);
+            margin: 1.5rem auto;
+            text-align: center;
+            flex: 1;
+        }
+
+        .moving-ball-content canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            border: 2px solid #000;
+        }
+    </style>
+</head>
+<body class="moving-ball-page">
+    <main class="moving-ball-content">
+        <h1 class="lighthead">Moving Ball</h1>
+        <p>A simple ball moving across the canvas.</p>
+        <canvas id="movingBall" width="400" height="400" aria-label="A ball moving across a white canvas">
+            this animation requires a browser that supports the HTML canvas element
+        </canvas>
+    </main>
+    <footer class="site-footer">
+        <p>This is an old processing project that i imported over to my here</p>
+        <a class="basicButton" href="oldprocessinglinks.html">Back</a>
+    </footer>
+    <script>
+        const canvas = document.querySelector("#movingBall");
+        const context = canvas.getContext("2d");
+        let xPos = 0;
+        let previousTime = 0;
+
+        function draw(timestamp) {
+            const elapsed = previousTime ? timestamp - previousTime : 0;
+            previousTime = timestamp;
+
+            context.fillStyle = "#fff";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.beginPath();
+            context.arc(xPos, 25, 7.5, 0, Math.PI * 2);
+            context.fillStyle = "#000";
+            context.fill();
+
+            xPos += elapsed * 60 / 1000;
+            if (xPos >= canvas.width) {
+                xPos = 0;
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        requestAnimationFrame(draw);
+    </script>
+</body>
+</html>
