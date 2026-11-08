@@ -31,6 +31,12 @@
         .screwdriver-footer {
             margin-top: auto;
         }
+
+        .screwdriver-footer-actions {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+        }
     </style>
 </head>
 <body class="screwdriver-page">
@@ -44,17 +50,20 @@
     </main>
     <footer class="site-footer screwdriver-footer">
         <p>This is an old processing project that i imported over to my here</p>
-        <a class="basicButton" href="index.html">Back</a>
+        <div class="screwdriver-footer-actions">
+            <button class="basicButton" id="resetGame" type="button">Reset</button>
+            <a class="basicButton" href="index.html">Back</a>
+        </div>
     </footer>
     <script>
         const canvas = document.querySelector("#game");
         const context = canvas.getContext("2d");
         const coordinates = document.querySelector("#coordinates");
         const screws = [
-            { x: 122, y: 120, startX: 113, endX: 140, startY: 115, endY: 130 },
-            { x: 115, y: 380, startX: 109, endX: 127, startY: 373, endY: 392 },
-            { x: 375, y: 380, startX: 352, endX: 380, startY: 371, endY: 395 },
-            { x: 380, y: 115, startX: 352, endX: 380, startY: 115, endY: 130 }
+            { x: 122, initialX: 122, y: 120, startX: 113, endX: 140, startY: 115, endY: 130 },
+            { x: 115, initialX: 115, y: 380, startX: 109, endX: 127, startY: 373, endY: 392 },
+            { x: 375, initialX: 375, y: 380, startX: 352, endX: 380, startY: 371, endY: 395 },
+            { x: 380, initialX: 380, y: 115, startX: 352, endX: 380, startY: 115, endY: 130 }
         ];
         let pointer = { x: 0, y: 0, inside: false };
         let pixelRatio = 1;
@@ -121,6 +130,11 @@
         });
         canvas.addEventListener("pointerleave", () => {
             pointer.inside = false;
+        });
+        document.querySelector("#resetGame").addEventListener("click", () => {
+            for (const screw of screws) {
+                screw.x = screw.initialX;
+            }
         });
         window.addEventListener("resize", resizeCanvas);
 
