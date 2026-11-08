@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Move a Poké Ball around the canvas.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="IMG_2094.JPG" type="image/x-icon">
+    <title>Poké Ball Project</title>
+    <style>
+        .pokeball-page {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .pokeball-content {
+            width: min(100%, 600px);
+            margin: 1.5rem auto;
+            text-align: center;
+            flex: 1;
+        }
+
+        .pokeball-content canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            border: 2px solid #000;
+            touch-action: none;
+        }
+    </style>
+</head>
+<body class="pokeball-page">
+    <main class="pokeball-content">
+        <h1 class="lighthead">Poké Ball Project</h1>
+        <p>Move your mouse or touch the canvas to move the pokeball</p>
+        <canvas id="pokeball" width="600" height="600" aria-label="A Poké Ball that follows the pointer on a brown background">
+            This project requires a browser that supports the HTML canvas element.
+        </canvas>
+    </main>
+    <footer class="site-footer">
+        <p>This is an old Processing project that I imported over here.</p>
+        <a class="basicButton" href="oldprocessinglinks.html">Back to projects</a>
+    </footer>
+    <script>
+        const canvas = document.querySelector("#pokeball");
+        const context = canvas.getContext("2d");
+        const ball = { x: 0, y: 0 };
+        let pixelRatio = 1;
+
+        function resizeCanvas() {
+            pixelRatio = window.devicePixelRatio || 1;
+            canvas.width = 600 * pixelRatio;
+            canvas.height = 600 * pixelRatio;
+            context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        }
+
+        function updateBallPosition(event) {
+            const bounds = canvas.getBoundingClientRect();
+            ball.x = (event.clientX - bounds.left) * 600 / bounds.width;
+            ball.y = (event.clientY - bounds.top) * 600 / bounds.height;
+        }
+
+        function draw() {
+            context.fillStyle = "rgb(155, 78, 29)";
+            context.fillRect(0, 0, 600, 600);
+
+            context.save();
+            context.translate(ball.x, ball.y);
+
+            context.beginPath();
+            context.arc(0, 0, 50, Math.PI, Math.PI * 2);
+            context.closePath();
+            context.fillStyle = "rgb(255, 0, 0)";
+            context.fill();
+
+            context.beginPath();
+            context.arc(0, 0, 50, 0, Math.PI);
+            context.closePath();
+            context.fillStyle = "rgb(255, 255, 255)";
+            context.fill();
+
+            context.beginPath();
+            context.arc(0, 0, 15, 0, Math.PI * 2);
+            context.fill();
+
+            context.restore();
+            requestAnimationFrame(draw);
+        }
+
+        canvas.addEventListener("pointermove", updateBallPosition);
+        canvas.addEventListener("pointerdown", updateBallPosition);
+        window.addEventListener("resize", resizeCanvas);
+
+        resizeCanvas();
+        draw();
+    </script>
+</body>
+</html>
