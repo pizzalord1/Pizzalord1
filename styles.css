@@ -47,6 +47,10 @@ body {
     button:not(.discord-status-trigger):not(.basicButton):hover {
         transform: scale(1.05);
     }
+
+    .basicButton:hover:active {
+        transform: translate(3px, 3px) scale(1.05);
+    }
 }
 
 button:not(.discord-status-trigger):not(.basicButton) {
