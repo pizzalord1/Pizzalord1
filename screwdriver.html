@@ -68,6 +68,7 @@
         ];
         let pointer = { x: 0, y: 0, inside: false, down: false };
         let pixelRatio = 1;
+        let previousFrameTime = 0;
 
         function resizeCanvas() {
             pixelRatio = window.devicePixelRatio || 1;
@@ -113,7 +114,12 @@
             context.restore();
         }
 
-        function draw() {
+        function draw(timestamp) {
+            const elapsedSeconds = previousFrameTime
+                ? Math.min((timestamp - previousFrameTime) / 1000, 0.05)
+                : 0;
+            previousFrameTime = timestamp;
+
             context.clearRect(0, 0, 600, 600);
             context.fillStyle = "rgb(255, 255, 255)";
             context.fillRect(0, 0, 600, 600);
@@ -132,14 +138,17 @@
                     pointer.x > screw.startX && pointer.x < screw.endX &&
                     pointer.y > screw.startY && pointer.y < screw.endY
                 ) {
-                    screw.x = Math.min(screw.x + 4, 1000);
+                    screw.x = Math.min(screw.x + 240 * elapsedSeconds, 1000);
                 }
             }
 
             requestAnimationFrame(draw);
         }
 
-        canvas.addEventListener("pointermove", updatePointer);
+        canvas.addEventListener("pointermove", (event) => {
+            const samples = event.getCoalescedEvents?.();
+            updatePointer(samples?.[samples.length - 1] ?? event);
+        });
         canvas.addEventListener("pointerdown", (event) => {
             pointer.down = true;
             canvas.setPointerCapture(event.pointerId);
