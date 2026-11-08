@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Use the screwdriver to move the screws across the board.">
+    <link rel="stylesheet" href="styles.css">
+    <title>Screwdriver</title>
+    <style>
+        .screwdriver-page {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .screwdriver-game {
+            width: min(100%, 600px);
+            margin: 1.5rem auto;
+            text-align: center;
+            flex: 1;
+        }
+
+        .screwdriver-game canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            border: 2px solid rgb(0,0,0);
+            touch-action: none;
+        }
+
+        .screwdriver-footer {
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body class="screwdriver-page">
+    <main class="screwdriver-game">
+        <h1 class="lighthead">Screwdriver project</h1>
+        <p>Move your mouse or finger over the screws to move them across the board</p>
+        <canvas id="game" width="600" height="600" aria-label="Screwdriver game board">
+            This requires a browser that supports the HTML canvas element.
+        </canvas>
+        <p id="coordinates" aria-live="polite">hover mouse over the board to see the pointer coordinates.</p>
+    </main>
+    <footer class="site-footer screwdriver-footer">
+        <p>This is an old processing project that i imported over to my here</p>
+        <a class="basicButton" href="index.html">Back</a>
+    </footer>
+    <script>
+        const canvas = document.querySelector("#game");
+        const context = canvas.getContext("2d");
+        const coordinates = document.querySelector("#coordinates");
+        const screws = [
+            { x: 122, y: 120, startX: 113, endX: 140, startY: 115, endY: 130 },
+            { x: 115, y: 380, startX: 109, endX: 127, startY: 373, endY: 392 },
+            { x: 375, y: 380, startX: 352, endX: 380, startY: 371, endY: 395 },
+            { x: 380, y: 115, startX: 352, endX: 380, startY: 115, endY: 130 }
+        ];
+        let pointer = { x: 0, y: 0, inside: false };
+        let pixelRatio = 1;
+
+        function resizeCanvas() {
+            pixelRatio = window.devicePixelRatio || 1;
+            canvas.width = 600 * pixelRatio;
+            canvas.height = 600 * pixelRatio;
+            context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        }
+
+        function updatePointer(event) {
+            const bounds = canvas.getBoundingClientRect();
+            pointer = {
+                x: (event.clientX - bounds.left) * 600 / bounds.width,
+                y: (event.clientY - bounds.top) * 600 / bounds.height,
+                inside: true
+            };
+        }
+
+        function drawScrewdriver() {
+            if (!pointer.inside) return;
+
+            context.save();
+            context.translate(pointer.x, pointer.y);
+            context.rotate(-Math.PI / 6);
+            context.fillStyle = "rgb(150, 152, 152)";
+            context.fillRect(0, 0, 5, 50);
+            context.fillStyle = "rgb(0, 0, 0)";
+            context.fillRect(-5, 50, 15, 75);
+            context.restore();
+        }
+
+        function draw() {
+            context.clearRect(0, 0, 600, 600);
+            context.fillStyle = "rgb(255, 255, 255)";
+            context.fillRect(0, 0, 600, 600);
+            context.fillStyle = "rgb(245, 241, 10)";
+            context.fillRect(100, 100, 300, 300);
+
+            drawScrewdriver();
+
+            for (const screw of screws) {
+                context.beginPath();
+                context.arc(screw.x, screw.y, 15, 0, Math.PI * 2);
+                context.fillStyle = "rgb(0, 0, 0)";
+                context.fill();
+
+                if (
+                    pointer.x > screw.startX && pointer.x < screw.endX &&
+                    pointer.y > screw.startY && pointer.y < screw.endY
+                ) {
+                    screw.x = Math.min(screw.x + 4, 1000);
+                }
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        canvas.addEventListener("pointermove", updatePointer);
+        canvas.addEventListener("pointerdown", (event) => {
+            updatePointer(event);
+            coordinates.textContent = `Pointer coordinates: ${Math.round(pointer.x)}, ${Math.round(pointer.y)}`;
+        });
+        canvas.addEventListener("pointerleave", () => {
+            pointer.inside = false;
+        });
+        window.addEventListener("resize", resizeCanvas);
+
+        resizeCanvas();
+        draw();
+    </script>
+</body>
+</html>
