@@ -58,7 +58,18 @@
     </footer>
     <script>
         const canvas = document.querySelector("#game");
-        const context = canvas.getContext("2d");
+        let context;
+        try {
+            context = canvas.getContext("2d", { alpha: false, desynchronized: true });
+        } catch {
+            context = null;
+        }
+        if (!context) {
+            context = canvas.getContext("2d");
+        }
+        if (!context) {
+            throw new Error("Unable to initialize the screwdriver game canvas.");
+        }
         const coordinates = document.querySelector("#coordinates");
         const coordinateInstructions = "Hover over the board or touch them, then move to track coordinates and move the screw.";
         const screws = [
@@ -100,6 +111,17 @@
                 event.clientY >= bounds.top && event.clientY <= bounds.bottom
             );
             coordinates.textContent = coordinateInstructions;
+        }
+
+        function handlePointerMove(event) {
+            let latestEvent = event;
+            if (typeof event.getCoalescedEvents === "function") {
+                const samples = event.getCoalescedEvents();
+                if (samples.length > 0) {
+                    latestEvent = samples[samples.length - 1];
+                }
+            }
+            updatePointer(latestEvent);
         }
 
         function drawScrewdriver() {
@@ -146,13 +168,15 @@
             requestAnimationFrame(draw);
         }
 
-        canvas.addEventListener("pointermove", (event) => {
-            const samples = event.getCoalescedEvents?.();
-            updatePointer(samples?.[samples.length - 1] ?? event);
-        });
+        canvas.addEventListener("pointermove", handlePointerMove);
+        if ("onpointerrawupdate" in canvas) {
+            canvas.addEventListener("pointerrawupdate", handlePointerMove);
+        }
         canvas.addEventListener("pointerdown", (event) => {
             pointer.down = true;
-            canvas.setPointerCapture(event.pointerId);
+            if (canvas.setPointerCapture) {
+                canvas.setPointerCapture(event.pointerId);
+            }
             updatePointer(event);
             coordinates.textContent = `Pointer coordinates: ${Math.round(pointer.x)}, ${Math.round(pointer.y)}`;
         });

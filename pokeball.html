@@ -38,22 +38,37 @@
         <canvas id="pokeball" width="600" height="600" role="img" aria-label="Interactive animation of a Poké Ball that follows the pointer on a brown background" aria-describedby="pokeballInstructions">
             This project requires a browser that supports the HTML canvas element.
         </canvas>
+        <p id="canvasFallback" hidden>This animation is not supported by your browser. Try a newer browser to view it.</p>
     </main>
     <footer class="site-footer">
         <p>This is an old Processing project that I imported over here.</p>
         <a class="basicButton" href="oldprocessinglinks.html">Back to projects</a>
     </footer>
     <script>
+        (() => {
         const canvas = document.querySelector("#pokeball");
         const context = canvas.getContext("2d");
+        if (!context) {
+            canvas.hidden = true;
+            document.querySelector("#canvasFallback").hidden = false;
+            return;
+        }
+
         const ball = { x: 0, y: 0 };
         let pixelRatio = 1;
+        const requestFrame = window.requestAnimationFrame
+            ? window.requestAnimationFrame.bind(window)
+            : (callback) => window.setTimeout(() => callback(Date.now()), 1000 / 60);
 
         function resizeCanvas() {
             pixelRatio = window.devicePixelRatio || 1;
             canvas.width = 600 * pixelRatio;
             canvas.height = 600 * pixelRatio;
-            context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+            if (context.setTransform) {
+                context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+            } else {
+                context.scale(pixelRatio, pixelRatio);
+            }
         }
 
         function updateBallPosition(event) {
@@ -86,15 +101,32 @@
             context.fill();
 
             context.restore();
-            requestAnimationFrame(draw);
+            requestFrame(draw);
         }
 
-        canvas.addEventListener("pointermove", updateBallPosition);
-        canvas.addEventListener("pointerdown", updateBallPosition);
+        if ("PointerEvent" in window) {
+            canvas.addEventListener("pointermove", updateBallPosition);
+            canvas.addEventListener("pointerdown", updateBallPosition);
+        } else {
+            canvas.addEventListener("mousemove", updateBallPosition);
+            canvas.addEventListener("mousedown", updateBallPosition);
+            const updateTouchPosition = (event) => {
+                if (event.cancelable) {
+                    event.preventDefault();
+                }
+                const touch = event.touches[0] || event.changedTouches[0];
+                if (touch) {
+                    updateBallPosition(touch);
+                }
+            };
+            canvas.addEventListener("touchstart", updateTouchPosition, { passive: false });
+            canvas.addEventListener("touchmove", updateTouchPosition, { passive: false });
+        }
         window.addEventListener("resize", resizeCanvas);
 
         resizeCanvas();
         draw();
+        })();
     </script>
 </body>
 </html>
