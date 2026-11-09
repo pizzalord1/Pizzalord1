@@ -30,12 +30,15 @@
     </style>
 </head>
 <body class="moving-ball-page">
-    <main class="moving-ball-content">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <main class="moving-ball-content" id="main-content">
         <h1 class="lighthead">Moving Ball</h1>
         <p>A simple ball moving across the canvas.</p>
-        <canvas id="movingBall" width="400" height="400" aria-label="A ball moving across a white canvas">
+        <canvas id="movingBall" width="400" height="400" role="img" aria-label="Animation of a black ball moving from left to right across a white canvas">
             this animation requires a browser that supports the HTML canvas element
         </canvas>
+        <button class="basicButton" id="toggleAnimation" type="button" aria-pressed="false">Start animation</button>
+        <p id="animationStatus" role="status" aria-live="polite" aria-atomic="true"></p>
     </main>
     <footer class="site-footer">
         <p>This is an old processing project that i imported over to my here</p>
@@ -44,10 +47,15 @@
     <script>
         const canvas = document.querySelector("#movingBall");
         const context = canvas.getContext("2d");
-        let xPos = 0;
+        const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const toggleAnimation = document.querySelector("#toggleAnimation");
+        const animationStatus = document.querySelector("#animationStatus");
+        let isAnimating = !motionPreference.matches;
+        let xPos = isAnimating ? 0 : canvas.width / 2;
         let previousTime = 0;
+        let animationFrame = 0;
 
-        function draw(timestamp) {
+        function draw(timestamp = 0) {
             const elapsed = previousTime ? timestamp - previousTime : 0;
             previousTime = timestamp;
 
@@ -58,15 +66,43 @@
             context.fillStyle = "#000";
             context.fill();
 
-            xPos += elapsed * 60 / 1000;
-            if (xPos >= canvas.width) {
-                xPos = 0;
-            }
+            if (isAnimating) {
+                xPos += elapsed * 60 / 1000;
+                if (xPos >= canvas.width) {
+                    xPos = 0;
+                }
 
-            requestAnimationFrame(draw);
+                animationFrame = requestAnimationFrame(draw);
+            }
         }
 
-        requestAnimationFrame(draw);
+        function setAnimationState(animate, announce = true) {
+            isAnimating = animate;
+            toggleAnimation.textContent = isAnimating ? "Pause animation" : "Start animation";
+            toggleAnimation.setAttribute("aria-pressed", String(isAnimating));
+            previousTime = 0;
+
+            if (isAnimating) {
+                animationFrame = requestAnimationFrame(draw);
+                if (announce) animationStatus.textContent = "Animation started.";
+            } else {
+                cancelAnimationFrame(animationFrame);
+                draw();
+                if (announce) animationStatus.textContent = "Animation paused.";
+            }
+        }
+
+        toggleAnimation.addEventListener("click", () => {
+            setAnimationState(!isAnimating);
+        });
+
+        motionPreference.addEventListener("change", (event) => {
+            if (event.matches && isAnimating) {
+                setAnimationState(false);
+            }
+        });
+
+        setAnimationState(isAnimating, false);
     </script>
 </body>
 </html>

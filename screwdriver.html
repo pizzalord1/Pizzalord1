@@ -40,13 +40,14 @@
     </style>
 </head>
 <body class="screwdriver-page">
-    <main class="screwdriver-game">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <main class="screwdriver-game" id="main-content">
         <h1 class="lighthead">Screwdriver project</h1>
-        <p>Move your mouse or finger over the screws to move them across the board</p>
-        <canvas id="game" width="600" height="600" aria-label="Screwdriver game board">
+        <p id="gameInstructions">Use a mouse or touch pointer over the screws to move them across the board. Select Reset to return the screws to their starting positions.</p>
+        <canvas id="game" width="600" height="600" role="img" aria-label="Screwdriver game board with four screws that move when the pointer is over them" aria-describedby="gameInstructions">
             This requires a browser that supports the HTML canvas element.
         </canvas>
-        <p id="coordinates">Hover over the board or touch them, then move to track coordinates and move the screw.</p>
+        <p id="coordinates" aria-live="off">Hover over the board or touch it to track coordinates and move the screws.</p>
     </main>
     <footer class="site-footer screwdriver-footer">
         <p>This is an old processing project that i imported over to my here</p>

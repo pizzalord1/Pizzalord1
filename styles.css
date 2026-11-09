@@ -9,6 +9,28 @@ body {
     box-sizing: border-box;
 }
 
+.skip-link {
+    position: fixed;
+    z-index: 20;
+    top: 0.5rem;
+    left: 0.5rem;
+    padding: 0.75rem 1rem;
+    color: #000;
+    background: #fff;
+    border: 2px solid #000;
+    border-radius: 0.5rem;
+    transform: translateY(calc(-100% - 1rem));
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
+.basicButton:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+}
+
 .lighthead {
     color: #f7f9e3;
     font-size: 24px;
@@ -367,7 +389,8 @@ iframe {
     outline-offset: 3px;
 }
 
-.photo-description-content p {
+.photo-description-content p,
+.photo-description-content h2 {
     margin: 0;
     font-size: clamp(1.25rem, 4vw, 1.75rem);
     line-height: 1.5;

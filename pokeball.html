@@ -31,10 +31,11 @@
     </style>
 </head>
 <body class="pokeball-page">
-    <main class="pokeball-content">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <main class="pokeball-content" id="main-content">
         <h1 class="lighthead">Poké Ball Project</h1>
-        <p>Move your mouse or touch the canvas to move the pokeball</p>
-        <canvas id="pokeball" width="600" height="600" aria-label="A Poké Ball that follows the pointer on a brown background">
+        <p id="pokeballInstructions">Move your mouse or touch the canvas to move the Poké Ball.</p>
+        <canvas id="pokeball" width="600" height="600" role="img" aria-label="Interactive animation of a Poké Ball that follows the pointer on a brown background" aria-describedby="pokeballInstructions">
             This project requires a browser that supports the HTML canvas element.
         </canvas>
     </main>

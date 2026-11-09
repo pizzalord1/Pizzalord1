@@ -5,28 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="favicon.jpg" type="image/jpeg">
-    <title>Document</title>
+    <title>About me | Pizzalord</title>
+    <style>
+        .about-me-page p {
+            line-height: 1.6;
+            max-width: 45ch;
+            margin-bottom: 1.5rem;
+        }
+    </style>
 </head>
-<body>
+<body class="about-me-page">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <main id="main-content">
+        <h1>Hello, I'm Xavier. My pronouns are he/him.</h1>
+        <h2>The song I'm interested in right now</h2>
+        <div class="spotify-embed">
+            <iframe
+                title="Spotify music player"
+                src="https://open.spotify.com/embed/track/6kOjPSvKAG9aOI4uphye3u?utm_source=generator&amp;si=6a5470ac86a24a1a"
+                width="100%"
+                height="352"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy">
+            </iframe>
+        </div>
+        <p class="musictextColor"><a href="https://open.spotify.com/track/4U0wNvX09APPfe8TGIYHoO?si=7769c58d4b4d4f31"><em>Music has touched generations, liberated cultures. Made people fall in love, made people cry. It's true emotion.</em></a></p>
 
- <h1>Hello, I'm Xavier. My Pronouns are He/Him. </h1>
- <ol> 
-    <em>The song i'm interested in right now ↓</em> 
-    </ol>
-
-       <div class="spotify-embed"><iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/6kOjPSvKAG9aOI4uphye3u?utm_source=generator&si=6a5470ac86a24a1a" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
-        
-        <style>
-  p {
-    line-height: 1.6;
-    max-width: 45ch;
-    margin-bottom: 1.5rem;
-  }
-</style>
-
-<p class="musictextColor"><a href="https://open.spotify.com/track/4U0wNvX09APPfe8TGIYHoO?si=7769c58d4b4d4f31"><em>Music has touched generations, liberated cultures. Made people fall in love, made people cry. its true emotion.</em></a>
-
-    <pre>                !
+        <pre role="img" aria-label="ASCII art of a screwdriver">                !
                 |
                 |    |~/
                 |   _|~
@@ -38,9 +43,8 @@
 | |:::::||:::::| |
 | '=====''=====' |  
 '----------------' </pre>
-    <a class="basicButton" href="index.html">Back</a>
-</pre>
-</pre>
+        <a class="basicButton" href="index.html">Back to home</a>
+    </main>
 <script src="surprise.js?v=5"></script>
 </body>
 </html>

@@ -18,20 +18,21 @@
 
 
 <body>
-   <div class="hero-box">
+   <a class="skip-link" href="#main-content">Skip to main content</a>
+   <header class="hero-box">
        <div class="website-carousel" role="region" aria-roledescription="carousel" aria-label="Cat photos">
-           <input class="carousel-slide-toggle" type="radio" name="cat-photo-slide" id="catPhotoSlide1" aria-label="Slide 1 of 4" checked>
-           <input class="carousel-slide-toggle" type="radio" name="cat-photo-slide" id="catPhotoSlide2" aria-label="Slide 2 of 4">
-           <input class="carousel-slide-toggle" type="radio" name="cat-photo-slide" id="catPhotoSlide3" aria-label="Slide 3 of 4">
-           <input class="carousel-slide-toggle" type="radio" name="cat-photo-slide" id="catPhotoSlide4" aria-label="Slide 4 of 4">
+           <input class="carousel-slide-toggle" type="radio" name="cat-photo-slide" id="catPhotoSlide1" aria-label="Show slide 1 of 4: Omlette" aria-controls="catPhotoPanel1" checked>
+           <input class="carousel-slide-toggle" type="radio" name="cat-photo-slide" id="catPhotoSlide2" aria-label="Show slide 2 of 4: Junior" aria-controls="catPhotoPanel2">
+           <input class="carousel-slide-toggle" type="radio" name="cat-photo-slide" id="catPhotoSlide3" aria-label="Show slide 3 of 4: Nigel" aria-controls="catPhotoPanel3">
+           <input class="carousel-slide-toggle" type="radio" name="cat-photo-slide" id="catPhotoSlide4" aria-label="Show slide 4 of 4: Harley" aria-controls="catPhotoPanel4">
            <div class="carousel-indicators">
-               <label for="catPhotoSlide1" aria-label="Show slide 1"></label>
-               <label for="catPhotoSlide2" aria-label="Show slide 2"></label>
-               <label for="catPhotoSlide3" aria-label="Show slide 3"></label>
-               <label for="catPhotoSlide4" aria-label="Show slide 4"></label>
+               <label for="catPhotoSlide1" aria-label="Show slide 1: Omlette"></label>
+               <label for="catPhotoSlide2" aria-label="Show slide 2: Junior"></label>
+               <label for="catPhotoSlide3" aria-label="Show slide 3: Nigel"></label>
+               <label for="catPhotoSlide4" aria-label="Show slide 4: Harley"></label>
            </div>
            <div class="carousel-inner">
-               <div class="carousel-item" role="group" aria-roledescription="slide" aria-label="1 of 4">
+               <div class="carousel-item" id="catPhotoPanel1" role="group" aria-roledescription="slide" aria-label="Slide 1 of 4: Omlette">
                    <button class="photo-trigger" type="button" data-description="Taken in March 2026 on a iPhone 16 Pro.">
                        <picture>
                            <source srcset="IMG_4303.jxl" type="image/jxl">
@@ -39,7 +40,7 @@
                        </picture>
                    </button>
                </div>
-               <div class="carousel-item" role="group" aria-roledescription="slide" aria-label="2 of 4">
+               <div class="carousel-item" id="catPhotoPanel2" role="group" aria-roledescription="slide" aria-label="Slide 2 of 4: Junior">
                    <button class="photo-trigger" type="button" data-description="Taken in July 2026 on an iPhone 16 Pro.">
                        <picture>
                            <source data-srcset="IMG_6398.jxl" type="image/jxl">
@@ -47,14 +48,14 @@
                        </picture>
                    </button>
                </div>
-               <div class="carousel-item" role="group" aria-roledescription="slide" aria-label="3 of 4">
+               <div class="carousel-item" id="catPhotoPanel3" role="group" aria-roledescription="slide" aria-label="Slide 3 of 4: Nigel">
                    <button class="photo-trigger" type="button" data-description="Photo taken in October 2026 on a Canon PowerShot SX110 IS.">
                        <picture>
                            <img class="website-photo" data-src="IMG_2094-optimized.JPG" alt="Nigel" width="1800" height="1350" loading="lazy" decoding="async" data-download="IMG_2094.JPG">
                        </picture>
                    </button>
                </div>
-               <div class="carousel-item" role="group" aria-roledescription="slide" aria-label="4 of 4">
+               <div class="carousel-item" id="catPhotoPanel4" role="group" aria-roledescription="slide" aria-label="Slide 4 of 4: Harley">
                    <button class="photo-trigger" type="button" data-description="Photo taken in June 2026 on an iPhone 16 Pro.">
                        <picture>
                            <source data-srcset="IMG_5774.jxl" type="image/jxl">
@@ -75,19 +76,19 @@
            </div>
        </div>
        <h1 class="world">Welcome to Pizzalord.online</h1>
-   </div>
+   </header>
   
-   <div class="links home-links">
+   <main class="links home-links" id="main-content">
        <a class="basicButton" href="Minecraft Worlds.html" >Download my Minecraft World</a>
    <a class="basicButton" href="linkshrub.html" >Link.shrub /!\ under construction /!\</a>
     <a class="basicButton" href="access-denied.html" style="color: rgb(117, 0, 0);">Access Denied</a>
        <a class="basicButton" href="socials.html" >My socials</a>
        <a class="basicButton" href="oldprocessinglinks.html" >Old processing projects</a>
-   </div>
+   </main>
 
     <footer class="site-footer" style="color: black;">
         <div class="site-footer-content">
-            <div class="site-footer-links">
+            <nav class="site-footer-links" aria-label="Footer navigation">
                 <div class="site-footer-link">
                     <a class="basicButton" href="AboutMe.html">About me</a>
                 </div>
@@ -97,17 +98,17 @@
                 <div class="site-footer-link">
                     <a class="basicButton" href="#">add sm later</a>
                 </div>
-            </div>
+            </nav>
             <p class="site-footer-credit"><b>2026 by Xavier</b></p>
         </div>
    </footer>
-    <dialog class="photo-description-dialog" id="photoDescriptionDialog" aria-labelledby="photoDescription">
+    <dialog class="photo-description-dialog" id="photoDescriptionDialog" aria-labelledby="photoDescription" aria-describedby="photoAdditionalDescription">
         <div class="photo-description-content">
             <form method="dialog">
                 <button class="basicButton photo-description-close" type="submit">Close</button>
             </form>
             <img class="photo-description-image" id="photoDescriptionImage" alt="">
-            <p id="photoDescription"></p>
+            <h2 id="photoDescription"></h2>
             <p class="photo-description-secondary" id="photoAdditionalDescription" hidden></p>
             <div class="photo-description-actions">
                 <a class="basicButton" id="photoDownloadLink" download>Download photo</a>

@@ -8,10 +8,11 @@
    <title>Socials</title>
 </head>
 <body class="socials-page">
+   <a class="skip-link" href="#main-content">Skip to main content</a>
    <header class="hero-box">
       <h1 class="world">My socials</h1>
    </header>
-   <main class="socials-content">
+   <main class="socials-content" id="main-content">
       <nav class="links socials-links" aria-label="Social links">
          <a class="basicButton social-icon-link" href="https://www.youtube.com/@Pizzalord01">
             <img class="social-link-icon" src="youtube-color-icon-small.jpg" alt="" width="96" height="96">
@@ -46,7 +47,7 @@
       scrolling="no"
       frameborder="0">
     </iframe>
-    <button class="discord-status-trigger" type="button" aria-label="Show Discord contact details"></button>
+    <button class="discord-status-trigger" type="button" aria-label="Show Discord contact details" aria-haspopup="dialog" aria-controls="discordContactDialog" aria-expanded="false"></button>
     <span class="discord-status-tooltip" id="discordStatusTooltip" aria-hidden="true" hidden>click to add me on Discord</span>
   </div>
 </section>
@@ -57,13 +58,13 @@
       <p class="world socials-note">Will add more later....</p>
    </main>
    <dialog class="discord-contact-dialog" id="discordContactDialog" aria-labelledby="discordContactTitle">
-      <button class="basicButton discord-contact-back" type="button" aria-label="Back">close</button>
+      <button class="basicButton discord-contact-back" type="button">Close</button>
       <h2 id="discordContactTitle">add me on discord:</h2>
       <div class="discord-contact-copy-row">
          <input id="discordUsername" type="text" value="pizzasgrave" readonly aria-label="Discord username">
-         <button class="basicButton" id="copyDiscordUsername" type="button">copy</button>
+         <button class="basicButton" id="copyDiscordUsername" type="button" aria-label="Copy Discord username">copy</button>
       </div>
-      <p class="discord-contact-copy-status" id="discordCopyStatus" aria-live="polite"></p>
+      <p class="discord-contact-copy-status" id="discordCopyStatus" role="status" aria-live="polite" aria-atomic="true"></p>
    </dialog>
    <script src="socials.js"></script>
    <script src="surprise.js?v=5"></script>

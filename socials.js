@@ -24,6 +24,7 @@ function closeDiscordContactDialog() {
         discordContactDialog.classList.remove("is-closing");
         discordContactCloseAnimationEnd = undefined;
         discordContactClosing = false;
+        discordStatusTrigger.setAttribute("aria-expanded", "false");
         discordContactDialog.close();
     };
     discordContactDialog.addEventListener("animationend", discordContactCloseAnimationEnd);
@@ -32,6 +33,7 @@ function closeDiscordContactDialog() {
 discordStatusTrigger.addEventListener("click", () => {
     discordCopyStatus.textContent = "";
     discordContactDialog.showModal();
+    discordStatusTrigger.setAttribute("aria-expanded", "true");
 });
 
 discordStatusTrigger.addEventListener("pointermove", (event) => {
@@ -73,6 +75,7 @@ discordContactDialog.addEventListener("close", () => {
     }
     discordContactDialog.classList.remove("is-closing");
     discordContactClosing = false;
+    discordStatusTrigger.setAttribute("aria-expanded", "false");
 });
 
 discordContactDialog.addEventListener("click", (event) => {
