@@ -318,6 +318,8 @@ iframe {
 .photo-description-dialog {
     width: min(90vw, 56rem);
     max-height: 90vh;
+    --discord-dialog-enter-offset: 2.5rem;
+    --discord-dialog-enter-duration: 320ms;
     padding: 0;
     color: #fff;
     background: rgba(25, 25, 25, 0.94);
@@ -327,8 +329,21 @@ iframe {
     overflow-y: auto;
 }
 
+.photo-description-dialog[open] {
+    animation: discord-contact-appear var(--discord-dialog-enter-duration) ease both;
+}
+
+.photo-description-dialog.is-closing[open] {
+    animation: discord-contact-disappear var(--discord-dialog-enter-duration) ease both;
+}
+
 .photo-description-dialog::backdrop {
     background: rgba(0, 0, 0, 0.65);
+    animation: discord-contact-backdrop-appear var(--discord-dialog-enter-duration) ease both;
+}
+
+.photo-description-dialog.is-closing::backdrop {
+    animation: discord-contact-backdrop-disappear var(--discord-dialog-enter-duration) ease both;
 }
 
 .photo-description-content {
@@ -649,8 +664,15 @@ pre {
         --discord-dialog-enter-duration: 160ms;
     }
 
+    .photo-description-dialog {
+        --discord-dialog-enter-offset: 0.5rem;
+        --discord-dialog-enter-duration: 160ms;
+    }
+
     .discord-contact-dialog[open],
-    .discord-contact-dialog::backdrop {
+    .discord-contact-dialog::backdrop,
+    .photo-description-dialog[open],
+    .photo-description-dialog::backdrop {
         animation-duration: var(--discord-dialog-enter-duration);
     }
 }
