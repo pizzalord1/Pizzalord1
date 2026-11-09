@@ -31,6 +31,8 @@
     </style>
 </head>
 <body class="pokeball-page">
+    <div class="compatibility-notice" id="browserCompatibilityNotice" role="status">Compatibility notice: Some interactive features may not work. Enable JavaScript or try a newer browser if something is missing.</div>
+    <script src="compatibility.js"></script>
     <a class="skip-link" href="#main-content">Skip to main content</a>
     <main class="pokeball-content" id="main-content">
         <h1 class="lighthead">Poké Ball Project</h1>
@@ -56,12 +58,13 @@
 
         const ball = { x: 0, y: 0 };
         let pixelRatio = 1;
+        let framePending = false;
         const requestFrame = window.requestAnimationFrame
             ? window.requestAnimationFrame.bind(window)
             : (callback) => window.setTimeout(() => callback(Date.now()), 1000 / 60);
 
         function resizeCanvas() {
-            pixelRatio = window.devicePixelRatio || 1;
+            pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
             canvas.width = 600 * pixelRatio;
             canvas.height = 600 * pixelRatio;
             if (context.setTransform) {
@@ -69,15 +72,24 @@
             } else {
                 context.scale(pixelRatio, pixelRatio);
             }
+            scheduleDraw();
         }
 
         function updateBallPosition(event) {
             const bounds = canvas.getBoundingClientRect();
             ball.x = (event.clientX - bounds.left) * 600 / bounds.width;
             ball.y = (event.clientY - bounds.top) * 600 / bounds.height;
+            scheduleDraw();
+        }
+
+        function scheduleDraw() {
+            if (framePending) return;
+            framePending = true;
+            requestFrame(draw);
         }
 
         function draw() {
+            framePending = false;
             context.fillStyle = "rgb(155, 78, 29)";
             context.fillRect(0, 0, 600, 600);
 
@@ -99,9 +111,7 @@
             context.beginPath();
             context.arc(0, 0, 15, 0, Math.PI * 2);
             context.fill();
-
             context.restore();
-            requestFrame(draw);
         }
 
         if ("PointerEvent" in window) {
@@ -125,7 +135,7 @@
         window.addEventListener("resize", resizeCanvas);
 
         resizeCanvas();
-        draw();
+        scheduleDraw();
         })();
     </script>
 </body>

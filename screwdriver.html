@@ -40,6 +40,8 @@
     </style>
 </head>
 <body class="screwdriver-page">
+    <div class="compatibility-notice" id="browserCompatibilityNotice" role="status">Compatibility notice: Some interactive features may not work. Enable JavaScript or try a newer browser if something is missing.</div>
+    <script src="compatibility.js"></script>
     <a class="skip-link" href="#main-content">Skip to main content</a>
     <main class="screwdriver-game" id="main-content">
         <h1 class="lighthead">Screwdriver project</h1>
@@ -81,12 +83,27 @@
         let pointer = { x: 0, y: 0, inside: false, down: false };
         let pixelRatio = 1;
         let previousFrameTime = 0;
+        let framePending = false;
+        const requestFrame = window.requestAnimationFrame
+            ? window.requestAnimationFrame.bind(window)
+            : (callback) => window.setTimeout(() => callback(Date.now()), 1000 / 60);
 
         function resizeCanvas() {
-            pixelRatio = window.devicePixelRatio || 1;
+            pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
             canvas.width = 600 * pixelRatio;
             canvas.height = 600 * pixelRatio;
-            context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+            if (context.setTransform) {
+                context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+            } else {
+                context.scale(pixelRatio, pixelRatio);
+            }
+            scheduleDraw();
+        }
+
+        function scheduleDraw() {
+            if (framePending) return;
+            framePending = true;
+            requestFrame(draw);
         }
 
         function updatePointer(event) {
@@ -122,6 +139,7 @@
                 }
             }
             updatePointer(latestEvent);
+            scheduleDraw();
         }
 
         function drawScrewdriver() {
@@ -138,6 +156,7 @@
         }
 
         function draw(timestamp) {
+            framePending = false;
             const elapsedSeconds = previousFrameTime
                 ? Math.min((timestamp - previousFrameTime) / 1000, 0.05)
                 : 0;
@@ -151,6 +170,7 @@
 
             drawScrewdriver();
 
+            let screwsMoving = false;
             for (const screw of screws) {
                 context.beginPath();
                 context.arc(screw.x, screw.y, 15, 0, Math.PI * 2);
@@ -158,14 +178,21 @@
                 context.fill();
 
                 if (
+                    pointer.inside &&
                     pointer.x > screw.startX && pointer.x < screw.endX &&
-                    pointer.y > screw.startY && pointer.y < screw.endY
+                    pointer.y > screw.startY && pointer.y < screw.endY &&
+                    screw.x < 1000
                 ) {
                     screw.x = Math.min(screw.x + 240 * elapsedSeconds, 1000);
+                    screwsMoving = screw.x < 1000;
                 }
             }
 
-            requestAnimationFrame(draw);
+            if (screwsMoving) {
+                scheduleDraw();
+            } else {
+                previousFrameTime = 0;
+            }
         }
 
         canvas.addEventListener("pointermove", handlePointerMove);
@@ -187,15 +214,20 @@
         });
         canvas.addEventListener("pointerup", stopPointer);
         canvas.addEventListener("pointercancel", stopPointer);
+        canvas.addEventListener("pointerdown", scheduleDraw);
+        canvas.addEventListener("pointerleave", scheduleDraw);
+        canvas.addEventListener("pointerup", scheduleDraw);
+        canvas.addEventListener("pointercancel", scheduleDraw);
         document.querySelector("#resetGame").addEventListener("click", () => {
             for (const screw of screws) {
                 screw.x = screw.initialX;
             }
+            scheduleDraw();
         });
         window.addEventListener("resize", resizeCanvas);
 
         resizeCanvas();
-        draw();
+        scheduleDraw();
     </script>
 </body>
 </html>
