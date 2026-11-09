@@ -5,6 +5,29 @@ const discordUsername = document.querySelector("#discordUsername");
 const copyDiscordUsername = document.querySelector("#copyDiscordUsername");
 const discordCopyStatus = document.querySelector("#discordCopyStatus");
 const discordStatusTooltip = document.querySelector("#discordStatusTooltip");
+let discordContactClosing = false;
+let discordContactCloseAnimationEnd;
+
+function closeDiscordContactDialog() {
+    if (!discordContactDialog.open || discordContactClosing) {
+        return;
+    }
+
+    discordContactClosing = true;
+    discordContactDialog.classList.add("is-closing");
+    discordContactCloseAnimationEnd = (event) => {
+        if (event.target !== discordContactDialog || event.animationName !== "discord-contact-disappear") {
+            return;
+        }
+
+        discordContactDialog.removeEventListener("animationend", discordContactCloseAnimationEnd);
+        discordContactDialog.classList.remove("is-closing");
+        discordContactCloseAnimationEnd = undefined;
+        discordContactClosing = false;
+        discordContactDialog.close();
+    };
+    discordContactDialog.addEventListener("animationend", discordContactCloseAnimationEnd);
+}
 
 discordStatusTrigger.addEventListener("click", () => {
     discordCopyStatus.textContent = "";
@@ -35,12 +58,26 @@ discordStatusTrigger.addEventListener("pointerleave", () => {
 });
 
 discordContactBack.addEventListener("click", () => {
-    discordContactDialog.close();
+    closeDiscordContactDialog();
+});
+
+discordContactDialog.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    closeDiscordContactDialog();
+});
+
+discordContactDialog.addEventListener("close", () => {
+    if (discordContactCloseAnimationEnd) {
+        discordContactDialog.removeEventListener("animationend", discordContactCloseAnimationEnd);
+        discordContactCloseAnimationEnd = undefined;
+    }
+    discordContactDialog.classList.remove("is-closing");
+    discordContactClosing = false;
 });
 
 discordContactDialog.addEventListener("click", (event) => {
     if (event.target === discordContactDialog) {
-        discordContactDialog.close();
+        closeDiscordContactDialog();
     }
 });
 

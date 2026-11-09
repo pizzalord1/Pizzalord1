@@ -571,6 +571,8 @@ pre {
 .discord-contact-dialog {
     position: fixed;
     width: min(90vw, 24rem);
+    --discord-dialog-enter-offset: 2.5rem;
+    --discord-dialog-enter-duration: 320ms;
     padding: 1.5rem;
     color: #fff;
     background: rgba(25, 25, 25, 0.78);
@@ -581,18 +583,26 @@ pre {
 }
 
 .discord-contact-dialog[open] {
-    animation: discord-contact-appear 220ms ease-out both;
+    animation: discord-contact-appear var(--discord-dialog-enter-duration) ease both;
+}
+
+.discord-contact-dialog.is-closing[open] {
+    animation: discord-contact-disappear var(--discord-dialog-enter-duration) ease both;
 }
 
 .discord-contact-dialog::backdrop {
     background: rgba(0, 0, 0, 0.4);
-    animation: discord-contact-backdrop-appear 220ms ease-out both;
+    animation: discord-contact-backdrop-appear var(--discord-dialog-enter-duration) ease both;
+}
+
+.discord-contact-dialog.is-closing::backdrop {
+    animation: discord-contact-backdrop-disappear var(--discord-dialog-enter-duration) ease both;
 }
 
 @keyframes discord-contact-appear {
     from {
         opacity: 0;
-        transform: translateY(0.75rem) scale(0.96);
+        transform: translateY(var(--discord-dialog-enter-offset)) scale(0.98);
     }
 
     to {
@@ -601,9 +611,31 @@ pre {
     }
 }
 
+@keyframes discord-contact-disappear {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(var(--discord-dialog-enter-offset)) scale(0.98);
+    }
+}
+
 @keyframes discord-contact-backdrop-appear {
     from {
         opacity: 0;
+    }
+
+    @keyframes discord-contact-backdrop-disappear {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
     }
 
     to {
@@ -612,9 +644,14 @@ pre {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .discord-contact-dialog {
+        --discord-dialog-enter-offset: 0.5rem;
+        --discord-dialog-enter-duration: 160ms;
+    }
+
     .discord-contact-dialog[open],
     .discord-contact-dialog::backdrop {
-        animation: none;
+        animation-duration: var(--discord-dialog-enter-duration);
     }
 }
 
