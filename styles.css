@@ -99,6 +99,28 @@ button:not(.discord-status-trigger):not(.basicButton) {
     margin: 0.5rem 0;
 }
 
+.site-footer-content {
+    width: min(100%, 1000px);
+    margin: 0 auto;
+}
+
+.site-footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.site-footer-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.site-footer-credit {
+    margin-top: 1rem;
+}
+
 .hero-box {
     background-color: rgb(114, 114, 250);
     color: rgb(0, 0, 0);
@@ -134,10 +156,149 @@ iframe {
 }
 
 .website-carousel {
+    position: relative;
     max-width: 760px;
     margin: 0 auto 10px;
     overflow: hidden;
     border-radius: 8px;
+}
+
+.carousel-slide-toggle {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.carousel-inner {
+    display: flex;
+    transition: transform 400ms ease;
+}
+
+.carousel-item {
+    flex: 0 0 100%;
+    min-width: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 400ms;
+}
+
+#catPhotoSlide1:checked ~ .carousel-inner .carousel-item:nth-child(1),
+#catPhotoSlide2:checked ~ .carousel-inner .carousel-item:nth-child(2),
+#catPhotoSlide3:checked ~ .carousel-inner .carousel-item:nth-child(3),
+#catPhotoSlide4:checked ~ .carousel-inner .carousel-item:nth-child(4) {
+    visibility: visible;
+    transition: none;
+}
+
+#catPhotoSlide2:checked ~ .carousel-inner {
+    transform: translateX(-100%);
+}
+
+#catPhotoSlide3:checked ~ .carousel-inner {
+    transform: translateX(-200%);
+}
+
+#catPhotoSlide4:checked ~ .carousel-inner {
+    transform: translateX(-300%);
+}
+
+.carousel-indicators {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    bottom: 12px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.carousel-indicators label {
+    width: 12px;
+    height: 12px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+}
+
+#catPhotoSlide1:checked ~ .carousel-indicators label[for="catPhotoSlide1"],
+#catPhotoSlide2:checked ~ .carousel-indicators label[for="catPhotoSlide2"],
+#catPhotoSlide3:checked ~ .carousel-indicators label[for="catPhotoSlide3"],
+#catPhotoSlide4:checked ~ .carousel-indicators label[for="catPhotoSlide4"] {
+    background: #fff;
+}
+
+#catPhotoSlide1:focus-visible ~ .carousel-indicators label[for="catPhotoSlide1"],
+#catPhotoSlide2:focus-visible ~ .carousel-indicators label[for="catPhotoSlide2"],
+#catPhotoSlide3:focus-visible ~ .carousel-indicators label[for="catPhotoSlide3"],
+#catPhotoSlide4:focus-visible ~ .carousel-indicators label[for="catPhotoSlide4"] {
+    outline: 3px solid #65b7ff;
+    outline-offset: 3px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    position: absolute;
+    top: 50%;
+    display: none;
+    width: 44px;
+    height: 56px;
+    margin-top: -28px;
+    background: rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+}
+
+.carousel-control-prev {
+    left: 0;
+    border-radius: 0 8px 8px 0;
+}
+
+.carousel-control-next {
+    right: 0;
+    border-radius: 8px 0 0 8px;
+}
+
+.carousel-control-prev::after,
+.carousel-control-next::after {
+    position: absolute;
+    top: 19px;
+    width: 16px;
+    height: 16px;
+    border-top: 3px solid #fff;
+    border-right: 3px solid #fff;
+    content: "";
+}
+
+.carousel-control-prev::after {
+    left: 17px;
+    transform: rotate(-135deg);
+}
+
+.carousel-control-next::after {
+    right: 17px;
+    transform: rotate(45deg);
+}
+
+#catPhotoSlide1:checked ~ .carousel-controls .prev-slide-4,
+#catPhotoSlide1:checked ~ .carousel-controls .next-slide-2,
+#catPhotoSlide2:checked ~ .carousel-controls .prev-slide-1,
+#catPhotoSlide2:checked ~ .carousel-controls .next-slide-3,
+#catPhotoSlide3:checked ~ .carousel-controls .prev-slide-2,
+#catPhotoSlide3:checked ~ .carousel-controls .next-slide-4,
+#catPhotoSlide4:checked ~ .carousel-controls .prev-slide-3,
+#catPhotoSlide4:checked ~ .carousel-controls .next-slide-1 {
+    display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .carousel-inner {
+        transition: none;
+    }
 }
 
 .photo-trigger {
@@ -281,6 +442,11 @@ pre {
         display: block;
         width: 100%;
         height: 352px;
+    }
+
+    .site-footer-links {
+        grid-template-columns: 1fr;
+        gap: 0;
     }
 }
 

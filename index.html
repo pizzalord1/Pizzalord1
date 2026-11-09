@@ -11,7 +11,6 @@
    <meta property="og:description" content="This is my website, you can download my minecraft worlds here and view other links i have listed here.">
    <meta property="og:image" content="https://pizzalord.online/IMG_2094.JPG">
    <meta property="og:image:alt" content="Nigel the cat">
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
    <link rel="stylesheet" href="styles.css">
    <title>Pizzalord</title>
    <link rel="icon" href="IMG_2094.JPG" type="image/x-icon">
@@ -20,43 +19,49 @@
 
 <body>
    <div class="hero-box">
-       <div id="catPhotoCarousel" class="carousel slide website-carousel" data-bs-ride="carousel" data-bs-interval="5000">
+       <div class="website-carousel" role="region" aria-roledescription="carousel" aria-label="Cat photos">
+           <input class="carousel-slide-toggle" type="radio" name="cat-photo-slide" id="catPhotoSlide1" aria-label="Slide 1 of 4" checked>
+           <input class="carousel-slide-toggle" type="radio" name="cat-photo-slide" id="catPhotoSlide2" aria-label="Slide 2 of 4">
+           <input class="carousel-slide-toggle" type="radio" name="cat-photo-slide" id="catPhotoSlide3" aria-label="Slide 3 of 4">
+           <input class="carousel-slide-toggle" type="radio" name="cat-photo-slide" id="catPhotoSlide4" aria-label="Slide 4 of 4">
            <div class="carousel-indicators">
-               <button type="button" data-bs-target="#catPhotoCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-               <button type="button" data-bs-target="#catPhotoCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-               <button type="button" data-bs-target="#catPhotoCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-               <button type="button" data-bs-target="#catPhotoCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+               <label for="catPhotoSlide1" aria-label="Show slide 1"></label>
+               <label for="catPhotoSlide2" aria-label="Show slide 2"></label>
+               <label for="catPhotoSlide3" aria-label="Show slide 3"></label>
+               <label for="catPhotoSlide4" aria-label="Show slide 4"></label>
            </div>
            <div class="carousel-inner">
-               <div class="carousel-item active">
+               <div class="carousel-item" role="group" aria-roledescription="slide" aria-label="1 of 4">
                    <button class="photo-trigger" type="button" data-description="Taken in March 2026 on a iPhone 16 Pro.">
                        <img class="website-photo" src="IMG_4303.JPG" alt="Omlette">
                    </button>
                </div>
-               <div class="carousel-item">
+               <div class="carousel-item" role="group" aria-roledescription="slide" aria-label="2 of 4">
                    <button class="photo-trigger" type="button" data-description="Taken in July 2026 on an iPhone 16 Pro.">
                        <img class="website-photo" src="IMG_6398.JPG" alt="Junior">
                    </button>
                </div>
-               <div class="carousel-item">
+               <div class="carousel-item" role="group" aria-roledescription="slide" aria-label="3 of 4">
                    <button class="photo-trigger" type="button" data-description="Photo taken in October 2026 on a Canon PowerShot SX110 IS.">
                        <img class="website-photo" src="IMG_2094.JPG" alt="Nigel">
                    </button>
                </div>
-               <div class="carousel-item">
+               <div class="carousel-item" role="group" aria-roledescription="slide" aria-label="4 of 4">
                    <button class="photo-trigger" type="button" data-description="Photo taken in June 2026 on an iPhone 16 Pro.">
                        <img class="website-photo" src="IMG_5774.JPG" alt="Harley">
                    </button>
                </div>
            </div>
-           <button class="carousel-control-prev" type="button" data-bs-target="#catPhotoCarousel" data-bs-slide="prev">
-               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-               <span class="visually-hidden">Previous</span>
-           </button>
-           <button class="carousel-control-next" type="button" data-bs-target="#catPhotoCarousel" data-bs-slide="next">
-               <span class="carousel-control-next-icon" aria-hidden="true"></span>
-               <span class="visually-hidden">Next</span>
-           </button>
+           <div class="carousel-controls" aria-hidden="true">
+               <label class="carousel-control-prev prev-slide-4" for="catPhotoSlide4"></label>
+               <label class="carousel-control-prev prev-slide-1" for="catPhotoSlide1"></label>
+               <label class="carousel-control-prev prev-slide-2" for="catPhotoSlide2"></label>
+               <label class="carousel-control-prev prev-slide-3" for="catPhotoSlide3"></label>
+               <label class="carousel-control-next next-slide-2" for="catPhotoSlide2"></label>
+               <label class="carousel-control-next next-slide-3" for="catPhotoSlide3"></label>
+               <label class="carousel-control-next next-slide-4" for="catPhotoSlide4"></label>
+               <label class="carousel-control-next next-slide-1" for="catPhotoSlide1"></label>
+           </div>
        </div>
        <h1 class="world">Welcome to Pizzalord.online</h1>
    </div>
@@ -70,19 +75,19 @@
    </div>
 
     <footer class="site-footer" style="color: black;">
-        <div class="container text-center">
-            <div class="row row-cols-1 row-cols-sm-3 g-3">
-                <div class="col d-flex align-items-center justify-content-center p-3">
+        <div class="site-footer-content">
+            <div class="site-footer-links">
+                <div class="site-footer-link">
                     <a class="basicButton" href="AboutMe.html">About me</a>
                 </div>
-                <div class="col d-flex align-items-center justify-content-center p-3">
+                <div class="site-footer-link">
                     <a class="basicButton" href="https://github.com/pizzalord1/Pizzalord1">View my code</a>
                 </div>
-                <div class="col d-flex align-items-center justify-content-center p-3">
+                <div class="site-footer-link">
                     <a class="basicButton" href="#">add sm later</a>
                 </div>
             </div>
-            <p class="mt-3"><b>2026 by Xavier</b></p>
+            <p class="site-footer-credit"><b>2026 by Xavier</b></p>
         </div>
    </footer>
     <dialog class="photo-description-dialog" id="photoDescriptionDialog" aria-labelledby="photoDescription">
@@ -98,7 +103,6 @@
             </div>
         </div>
     </dialog>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="photo-description.js"></script>
 
    
