@@ -887,6 +887,16 @@ pre {
     margin: 0.75rem 0 0;
 }
 
+.secret-status-button {
+    display: block;
+    margin: 1rem auto 0;
+    text-align: center;
+}
+
+.secret-status-button[hidden] {
+    display: none;
+}
+
 .socials-note {
     margin: 0;
     text-align: center;

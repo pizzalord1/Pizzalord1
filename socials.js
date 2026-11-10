@@ -4,6 +4,7 @@ const discordContactBack = document.querySelector(".discord-contact-back");
 const discordUsername = document.querySelector("#discordUsername");
 const copyDiscordUsername = document.querySelector("#copyDiscordUsername");
 const discordCopyStatus = document.querySelector("#discordCopyStatus");
+const secretStatusButton = document.querySelector(".secret-status-button");
 const discordStatusTooltip = document.querySelector("#discordStatusTooltip");
 let discordContactClosing = false;
 let discordContactCloseAnimationEnd;
@@ -34,6 +35,22 @@ discordStatusTrigger.addEventListener("click", () => {
     discordCopyStatus.textContent = "";
     discordContactDialog.showModal();
     discordStatusTrigger.setAttribute("aria-expanded", "true");
+});
+
+document.addEventListener("keydown", (event) => {
+    if (!discordContactDialog.open || !event.ctrlKey || event.key !== ";" || event.altKey || event.metaKey) {
+        return;
+    }
+
+    event.preventDefault();
+    secretStatusButton.hidden = false;
+    secretStatusButton.focus();
+});
+
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+        secretStatusButton.hidden = true;
+    }
 });
 
 discordStatusTrigger.addEventListener("pointermove", (event) => {
@@ -75,6 +92,7 @@ discordContactDialog.addEventListener("close", () => {
     }
     discordContactDialog.classList.remove("is-closing");
     discordContactClosing = false;
+    secretStatusButton.hidden = true;
     discordStatusTrigger.setAttribute("aria-expanded", "false");
 });
 
