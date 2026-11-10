@@ -9,6 +9,7 @@ routes = [
 
 [vars]
 SENDER_EMAIL = "contact@pizzalord.online"
+CONTACT_RECIPIENT = "contact@pizzalord.online"
 
 [[send_email]]
 name = "EMAIL"
