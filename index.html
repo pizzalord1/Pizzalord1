@@ -108,12 +108,36 @@
                     <a class="basicButton" href="https://github.com/pizzalord1/Pizzalord1">View my code</a>
                 </div>
                 <div class="site-footer-link">
-                    <a class="basicButton" href="#">add sm later</a>
+                    <button class="basicButton contact-trigger" id="contactTrigger" type="button" aria-haspopup="dialog" aria-controls="contactDialog" aria-expanded="false">Contact me</button>
                 </div>
             </nav>
             <p class="site-footer-credit"><b>2026 by Xavier</b></p>
         </div>
    </footer>
+    <dialog class="contact-dialog" id="contactDialog" aria-labelledby="contactTitle">
+        <div class="contact-dialog-content">
+            <form method="dialog">
+                <button class="basicButton contact-close" type="submit">Close</button>
+            </form>
+            <h2 id="contactTitle">Contact me</h2>
+            <p>Send me a message using this form. Your email address will only be used to reply to you.</p>
+            <form class="contact-form" id="contactForm">
+                <label for="contactName">Your name</label>
+                <input id="contactName" name="name" type="text" maxlength="100" autocomplete="name" required>
+                <label for="contactEmail">Your email</label>
+                <input id="contactEmail" name="email" type="email" maxlength="254" autocomplete="email" required>
+                <label for="contactMessage">Message</label>
+                <textarea id="contactMessage" name="message" rows="5" maxlength="5000" required></textarea>
+                <div class="contact-honeypot" aria-hidden="true">
+                    <label for="contactWebsite">Leave this field empty</label>
+                    <input id="contactWebsite" name="website" type="text" tabindex="-1" autocomplete="off">
+                </div>
+                <div id="contactTurnstile"></div>
+                <button class="basicButton contact-submit" type="submit">Send message</button>
+                <p class="contact-status" id="contactStatus" role="status" aria-live="polite" aria-atomic="true"></p>
+            </form>
+        </div>
+    </dialog>
     <dialog class="photo-description-dialog" id="photoDescriptionDialog" aria-labelledby="photoDescription" aria-describedby="photoAdditionalDescription">
         <div class="photo-description-content">
             <form method="dialog">
@@ -129,6 +153,7 @@
     </dialog>
     <script src="search.js"></script>
     <script src="photo-description.js"></script>
+    <script src="contact.js" defer></script>
 
    
 </body>

@@ -1,0 +1,15 @@
+name = "pizzalord-contact"
+main = "cloudflare/contact-worker.js"
+compatibility_date = "2026-10-15"
+workers_dev = false
+
+routes = [
+    { pattern = "pizzalord.online/api/contact*", zone_name = "pizzalord.online" }
+]
+
+[vars]
+SENDER_EMAIL = "contact@pizzalord.online"
+
+[[send_email]]
+name = "EMAIL"
+remote = true
