@@ -76,16 +76,47 @@ body {
 
 @media (hover: hover) and (pointer: fine) {
     .basicButton:hover,
-    button:not(.discord-status-trigger):not(.basicButton):hover {
+    button:not(.discord-status-trigger):not(.basicButton):hover,
+    .carousel-control-prev:hover,
+    .carousel-control-next:hover {
         transform: scale(1.05);
+    }
+
+    .site-search-input:hover {
+        transform: scale(1.02);
     }
 
     .basicButton:hover:active {
         transform: translate(3px, 3px) scale(1.05);
     }
+
+    .carousel-control-prev:hover:active,
+    .carousel-control-next:hover:active {
+        transform: scale(0.98);
+    }
 }
 
 button:not(.discord-status-trigger):not(.basicButton) {
+    transition: transform 80ms ease;
+}
+
+.site-search-input {
+    transition: transform 120ms ease;
+}
+
+.site-search-input::-webkit-search-cancel-button {
+    cursor: pointer;
+    transition: transform 120ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .site-search-input::-webkit-search-cancel-button:hover {
+        transform: scale(1.2);
+    }
+}
+
+.carousel-control-prev,
+.carousel-control-next {
     transition: transform 80ms ease;
 }
 
@@ -276,10 +307,11 @@ iframe {
 
 .website-photo {
     display: block;
-    width: 100%;
-    height: clamp(280px, 55vw, 520px);
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: clamp(280px, 55vw, 520px);
     object-fit: contain;
-    background-color: rgb(139, 139, 139);
 }
 
 .website-carousel {
@@ -307,7 +339,10 @@ iframe {
 }
 
 .carousel-item {
+    display: flex;
     flex: 0 0 100%;
+    align-items: center;
+    justify-content: center;
     min-width: 0;
     visibility: hidden;
     transition: visibility 0s linear 400ms;
@@ -374,41 +409,40 @@ iframe {
     top: 50%;
     display: none;
     width: 44px;
-    height: 56px;
-    margin-top: -28px;
+    height: 44px;
+    margin-top: -22px;
     background: rgba(0, 0, 0, 0.45);
+    border-radius: 50%;
     cursor: pointer;
 }
 
 .carousel-control-prev {
     left: 0;
-    border-radius: 0 8px 8px 0;
 }
 
 .carousel-control-next {
     right: 0;
-    border-radius: 8px 0 0 8px;
 }
 
 .carousel-control-prev::after,
 .carousel-control-next::after {
     position: absolute;
-    top: 19px;
+    top: 50%;
+    left: 50%;
     width: 16px;
     height: 16px;
     border-top: 3px solid #fff;
     border-right: 3px solid #fff;
+    transform: translate(-50%, -50%);
     content: "";
 }
 
 .carousel-control-prev::after {
-    left: 17px;
-    transform: rotate(-135deg);
+    transform: translate(-50%, -50%) rotate(-135deg);
 }
 
 .carousel-control-next::after {
-    right: 17px;
-    transform: rotate(45deg);
+    transform: translate(-50%, -50%) rotate(45deg);
 }
 
 #catPhotoSlide1:checked ~ .carousel-controls .prev-slide-4,
@@ -430,7 +464,9 @@ iframe {
 
 .photo-trigger {
     display: block;
-    width: 100%;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
     padding: 0;
     border: 0;
     background: transparent;

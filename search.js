@@ -127,7 +127,7 @@ var siteSearchItems = [
         });
 
         if (matches.length === 0) {
-            status.textContent = "No results found. Try a different search.";
+            status.textContent = "nothing found";
             return;
         }
 
