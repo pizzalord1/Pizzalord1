@@ -1,8 +1,5 @@
-## Hello
+# Pizzalord.online
 
-The site is hosted with GitHub Pages:
+The static website source is in [`pizzalordWebsite/`](./pizzalordWebsite/). The contact Worker is in [`cloudflare/contact-worker.js`](./cloudflare/contact-worker.js), with its Wrangler configuration at the repository root.
 
-Custom domain: https://pizzalord.online/
- GitHub Pages URL: https://pizzalord1.github.io/Pizzalord1/
-
-This site uses Cloudflare technology.
+GitHub Pages is expected to publish from the repository root. The root `index.html` redirects visitors to the site folder, and the root `CNAME` keeps the custom domain configured. Keep both files at the root unless the Pages publishing source is changed.

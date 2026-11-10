@@ -5,6 +5,8 @@ const contactForm = document.querySelector("#contactForm");
 const contactStatus = document.querySelector("#contactStatus");
 const contactSubmit = contactForm.querySelector(".contact-submit");
 const contactTurnstile = document.querySelector("#contactTurnstile");
+const isLocalPreview = ["localhost", "127.0.0.1", "::1", "[::1]"].includes(window.location.hostname);
+const localPreviewMessage = "The contact form can only be sent from pizzalord.online.";
 let turnstileWidgetId;
 let turnstileLoadPromise;
 
@@ -39,6 +41,10 @@ contactTrigger.addEventListener("click", async () => {
     contactDialog.showModal();
     contactTrigger.setAttribute("aria-expanded", "true");
 
+    if (isLocalPreview) {
+        contactStatus.textContent = localPreviewMessage;
+        return;
+    }
     if (!CONTACT_TURNSTILE_SITE_KEY) {
         contactStatus.textContent = "The contact form is not configured yet.";
         return;
@@ -73,6 +79,10 @@ contactForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     contactStatus.textContent = "";
 
+    if (isLocalPreview) {
+        contactStatus.textContent = localPreviewMessage;
+        return;
+    }
     const turnstile = window.turnstile;
     if (!CONTACT_TURNSTILE_SITE_KEY || !turnstile || turnstileWidgetId === undefined) {
         contactStatus.textContent = "The contact form is not configured yet.";
