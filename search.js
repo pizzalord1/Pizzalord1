@@ -91,6 +91,7 @@ var siteSearchItems = [
     var input = document.getElementById("siteSearchInput");
     var results = document.getElementById("siteSearchResults");
     var status = document.getElementById("siteSearchStatus");
+    var searchSound = document.getElementById("searchSound");
     var searchIndex = siteSearchItems.map(function (item) {
         return {
             item: item,
@@ -100,6 +101,21 @@ var siteSearchItems = [
 
     if (!form || !input || !results || !status) {
         return;
+    }
+
+    function playWhoosh() {
+        if (!searchSound) {
+            return null;
+        }
+
+        searchSound.volume = 0.19;
+        searchSound.pause();
+        searchSound.currentTime = 0;
+        return searchSound.play();
+    }
+
+    function reportSoundFailure() {
+        status.textContent = "Search sound could not be played; navigation and search are still available.";
     }
 
     function renderResults() {
@@ -151,7 +167,47 @@ var siteSearchItems = [
 
     form.addEventListener("submit", function (event) {
         event.preventDefault();
+        try {
+            var playback = playWhoosh();
+            if (playback && typeof playback.catch === "function") {
+                playback.catch(reportSoundFailure);
+            }
+        } catch (error) {
+            reportSoundFailure();
+        }
         renderResults();
+    });
+
+    results.addEventListener("click", function (event) {
+        var target = event.target;
+        while (target && target !== results && target.tagName !== "A") {
+            target = target.parentNode;
+        }
+        if (!target || target === results) {
+            return;
+        }
+
+        try {
+            var playback = playWhoosh();
+            if (playback && typeof playback.catch === "function") {
+                playback.catch(reportSoundFailure);
+            }
+        } catch (error) {
+            reportSoundFailure();
+        }
+    });
+
+    document.querySelectorAll(".site-footer-link").forEach(function (column) {
+        column.addEventListener("click", function () {
+            try {
+                var playback = playWhoosh();
+                if (playback && typeof playback.catch === "function") {
+                    playback.catch(reportSoundFailure);
+                }
+            } catch (error) {
+                reportSoundFailure();
+            }
+        });
     });
 
     input.addEventListener("input", renderResults);
