@@ -67,6 +67,13 @@ var siteSearchItems = [
         href: "AboutMe.html"
     },
     {
+        title: "Contact me",
+        description: "Open the contact form to send me a message.",
+        keywords: "contact email message",
+        href: "#contactDialog",
+        action: "contact"
+    },
+    {
         title: "Link.shrub",
         description: "My Link.shrub page, currently under construction.",
         keywords: "link shrub links under construction",
@@ -92,6 +99,7 @@ var siteSearchItems = [
     var results = document.getElementById("siteSearchResults");
     var status = document.getElementById("siteSearchStatus");
     var searchSound = document.getElementById("searchSound");
+    var soundFailureTimer;
     var searchIndex = siteSearchItems.map(function (item) {
         return {
             item: item,
@@ -115,7 +123,14 @@ var siteSearchItems = [
     }
 
     function reportSoundFailure() {
-        status.textContent = "Search sound could not be played; navigation and search are still available.";
+        var message = "Search sound could not be played; navigation and search are still available.";
+        window.clearTimeout(soundFailureTimer);
+        status.textContent = message;
+        soundFailureTimer = window.setTimeout(function () {
+            if (status.textContent === message) {
+                status.textContent = "";
+            }
+        }, 5000);
     }
 
     function renderResults() {
@@ -158,6 +173,9 @@ var siteSearchItems = [
 
             link.href = item.href;
             link.textContent = item.title;
+            if (item.action) {
+                link.dataset.action = item.action;
+            }
             description.textContent = item.description;
             link.appendChild(description);
             listItem.appendChild(link);
@@ -185,6 +203,16 @@ var siteSearchItems = [
         }
         if (!target || target === results) {
             return;
+        }
+
+        if (target.dataset.action === "contact") {
+            event.preventDefault();
+            input.value = "";
+            renderResults();
+            var contactTrigger = document.getElementById("contactTrigger");
+            if (contactTrigger) {
+                contactTrigger.click();
+            }
         }
 
         try {
