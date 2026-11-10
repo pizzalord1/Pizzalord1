@@ -151,6 +151,19 @@
             </div>
         </div>
     </dialog>
+    <dialog class="site-error-dialog" id="siteErrorDialog" aria-labelledby="siteErrorTitle">
+        <div class="site-error-content">
+            <div class="site-error-header">
+                <h2 id="siteErrorTitle">Website error log</h2>
+                <button class="basicButton site-error-close" id="siteErrorClose" type="button">Close</button>
+            </div>
+            <p>Recent error summaries for this page load. This temporary log does not include form contents, email addresses, URLs, or stack traces.</p>
+            <p class="site-error-empty" id="siteErrorEmpty">No errors captured this page load.</p>
+            <ol class="site-error-list" id="siteErrorList" aria-live="polite"></ol>
+            <button class="basicButton site-error-clear" id="siteErrorClear" type="button">Clear log</button>
+        </div>
+    </dialog>
+    <script src="error-log.js"></script>
     <script src="search.js"></script>
     <script src="photo-description.js"></script>
     <script src="contact.js" defer></script>

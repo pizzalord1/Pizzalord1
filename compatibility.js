@@ -15,6 +15,10 @@
     }
 
     function showIssue(message) {
+        if (issues.indexOf(message) !== -1) {
+            return;
+        }
+
         issues.push(message);
         notice.textContent = "Compatibility notice: " + issues.join(" ");
         notice.style.display = "block";

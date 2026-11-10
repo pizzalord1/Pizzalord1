@@ -52,6 +52,7 @@ contactTrigger.addEventListener("click", async () => {
             });
         } catch (error) {
             console.error("Could not initialize the contact CAPTCHA:", error);
+            window.siteErrorLog?.record("CAPTCHA", "The CAPTCHA could not be initialized.");
             contactStatus.textContent = "The CAPTCHA could not load. Please try again later.";
         }
     }
@@ -104,6 +105,7 @@ contactForm.addEventListener("submit", async (event) => {
         const result = await response.json();
 
         if (!response.ok) {
+            window.siteErrorLog?.record("Contact form", "The server rejected the submission (HTTP " + response.status + ").");
             throw new Error(result.error || "Your message could not be sent.");
         }
 
@@ -112,6 +114,9 @@ contactForm.addEventListener("submit", async (event) => {
         contactStatus.textContent = "Thanks, your message has been sent.";
     } catch (error) {
         console.error("Contact form submission failed:", error);
+        if (error instanceof TypeError) {
+            window.siteErrorLog?.record("Contact form", "The request could not reach the contact service.");
+        }
         contactStatus.textContent = error instanceof TypeError
             ? "Could not connect to the contact service. Please try again later."
             : error.message;
