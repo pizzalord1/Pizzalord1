@@ -78,6 +78,15 @@
            </div>
        </div>
        <h1 class="world">Welcome to Pizzalord.online</h1>
+       <div class="site-search">
+           <form class="site-search-form" id="siteSearchForm" role="search">
+               <label class="site-search-label" for="siteSearchInput">Search this site</label>
+               <input class="site-search-input" id="siteSearchInput" type="search" placeholder="Search my site" autocomplete="off">
+               <button class="basicButton site-search-button" type="submit">Search</button>
+           </form>
+           <p class="site-search-status" id="siteSearchStatus" role="status" aria-live="polite" aria-atomic="true"></p>
+           <ul class="site-search-results" id="siteSearchResults" aria-label="Search results" hidden></ul>
+       </div>
    </header>
   
    <main class="links home-links" id="main-content">
@@ -117,6 +126,7 @@
             </div>
         </div>
     </dialog>
+    <script src="search.js"></script>
     <script src="photo-description.js"></script>
 
    
