@@ -256,7 +256,7 @@ button:not(.discord-status-trigger):not(.basicButton) {
     display: block;
     padding: 0.65rem 0.75rem;
     color: #000;
-    background: rgb(139, 139, 139);
+    background: rgb(155, 155, 155);
     border-radius: 8px;
     text-decoration: none;
 }
@@ -594,6 +594,7 @@ pre {
 
     .site-search-form {
         flex-wrap: wrap;
+        justify-content: center;
     }
 
     .site-search-input {
