@@ -98,8 +98,6 @@ var siteSearchItems = [
     var input = document.getElementById("siteSearchInput");
     var results = document.getElementById("siteSearchResults");
     var status = document.getElementById("siteSearchStatus");
-    var searchSound = document.getElementById("searchSound");
-    var soundFailureTimer;
     var searchIndex = siteSearchItems.map(function (item) {
         return {
             item: item,
@@ -109,28 +107,6 @@ var siteSearchItems = [
 
     if (!form || !input || !results || !status) {
         return;
-    }
-
-    function playWhoosh() {
-        if (!searchSound) {
-            return null;
-        }
-
-        searchSound.volume = 0.19;
-        searchSound.pause();
-        searchSound.currentTime = 0;
-        return searchSound.play();
-    }
-
-    function reportSoundFailure() {
-        var message = "Search sound could not be played; navigation and search are still available.";
-        window.clearTimeout(soundFailureTimer);
-        status.textContent = message;
-        soundFailureTimer = window.setTimeout(function () {
-            if (status.textContent === message) {
-                status.textContent = "";
-            }
-        }, 5000);
     }
 
     function renderResults() {
@@ -185,14 +161,6 @@ var siteSearchItems = [
 
     form.addEventListener("submit", function (event) {
         event.preventDefault();
-        try {
-            var playback = playWhoosh();
-            if (playback && typeof playback.catch === "function") {
-                playback.catch(reportSoundFailure);
-            }
-        } catch (error) {
-            reportSoundFailure();
-        }
         renderResults();
     });
 
@@ -214,28 +182,6 @@ var siteSearchItems = [
                 contactTrigger.click();
             }
         }
-
-        try {
-            var playback = playWhoosh();
-            if (playback && typeof playback.catch === "function") {
-                playback.catch(reportSoundFailure);
-            }
-        } catch (error) {
-            reportSoundFailure();
-        }
-    });
-
-    document.querySelectorAll(".site-footer-link").forEach(function (column) {
-        column.addEventListener("click", function () {
-            try {
-                var playback = playWhoosh();
-                if (playback && typeof playback.catch === "function") {
-                    playback.catch(reportSoundFailure);
-                }
-            } catch (error) {
-                reportSoundFailure();
-            }
-        });
     });
 
     input.addEventListener("input", renderResults);
