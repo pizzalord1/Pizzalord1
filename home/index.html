@@ -19,7 +19,7 @@
 
 <body>
    <div class="compatibility-notice" id="browserCompatibilityNotice" role="status">Compatibility notice: Some interactive features may not work. Enable JavaScript or try a newer browser if something is missing</div>
-   <script src="compatibility.js"></script>
+   <script src="compatibility.js" defer></script>
    <a class="skip-link" href="#main-content">Skip to main content</a>
    <header class="hero-box">
        <div class="website-carousel" role="region" aria-roledescription="carousel" aria-label="Cat photos">
@@ -45,15 +45,15 @@
                <div class="carousel-item" id="catPhotoPanel2" role="group" aria-roledescription="slide" aria-label="Slide 2 of 4: Junior">
                    <button class="photo-trigger" type="button" data-description="Taken in July 2026 on an iPhone 16 Pro.">
                        <picture>
-                           <source srcset="IMG_6398.jxl" type="image/jxl">
-                           <img class="website-photo" src="IMG_6398.JPG" alt="Junior" width="1465" height="824" loading="lazy" decoding="async" data-download="IMG_6398.JPG">
+                           <source data-srcset="IMG_6398.jxl" type="image/jxl">
+                           <img class="website-photo" src="IMG_6398-preview.JPG" alt="Junior" width="760" height="427" loading="lazy" decoding="async" data-src="IMG_6398.JPG" data-download="IMG_6398.JPG">
                        </picture>
                    </button>
                </div>
                <div class="carousel-item" id="catPhotoPanel3" role="group" aria-roledescription="slide" aria-label="Slide 3 of 4: Nigel">
                    <button class="photo-trigger" type="button" data-description="Photo taken in October 2026 on a Canon PowerShot SX110 IS.">
                        <picture>
-                           <img class="website-photo" src="IMG_2094-display.JPG" alt="Nigel" width="1200" height="900" loading="lazy" decoding="async" data-download="IMG_2094.JPG">
+                           <img class="website-photo" src="IMG_2094-preview.JPG" alt="Nigel" width="760" height="570" loading="lazy" decoding="async" data-src="IMG_2094-display.JPG" data-download="IMG_2094.JPG">
                        </picture>
                    </button>
                </div>
