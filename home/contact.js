@@ -4,14 +4,26 @@ const contactDialog = document.querySelector("#contactDialog");
 const contactForm = document.querySelector("#contactForm");
 const contactStatus = document.querySelector("#contactStatus");
 const contactSubmit = contactForm.querySelector(".contact-submit");
+const contactPhoto = document.querySelector("#contactPhoto");
 const contactTurnstile = document.querySelector("#contactTurnstile");
 const isLocalPreview = ["localhost", "127.0.0.1", "::1", "[::1]"].includes(window.location.hostname);
 const localPreviewMessage = "The contact form can only be sent from pizzalord.online.";
+const maxContactPhotoBytes = 3 * 1024 * 1024;
+const allowedContactPhotoTypes = ["image/jpeg", "image/png", "image/webp"];
 let turnstileWidgetId;
 let turnstileLoadPromise;
 let contactDialogClosing = false;
 let contactDialogCloseAnimationEnd;
 let contactDialogCloseTimeout;
+
+async function encodeFileAsBase64(file) {
+    const bytes = new Uint8Array(await file.arrayBuffer());
+    let binary = "";
+    for (let offset = 0; offset < bytes.length; offset += 0x8000) {
+        binary += String.fromCharCode(...bytes.subarray(offset, offset + 0x8000));
+    }
+    return btoa(binary);
+}
 
 function loadTurnstile() {
     if (window.turnstile) {
@@ -125,6 +137,11 @@ contactForm.addEventListener("submit", async (event) => {
         contactStatus.textContent = localPreviewMessage;
         return;
     }
+    const photoFile = contactPhoto.files[0];
+    if (photoFile && (!allowedContactPhotoTypes.includes(photoFile.type) || photoFile.size > maxContactPhotoBytes)) {
+        contactStatus.textContent = "Choose a JPEG, PNG, or WebP photo no larger than 3 MB.";
+        return;
+    }
     const turnstile = window.turnstile;
     if (!CONTACT_TURNSTILE_SITE_KEY || !turnstile || turnstileWidgetId === undefined) {
         contactStatus.textContent = "The contact form is not configured yet.";
@@ -143,12 +160,19 @@ contactForm.addEventListener("submit", async (event) => {
         message: formData.get("message"),
         website: formData.get("website"),
         turnstileToken,
+        photo: null,
     };
 
     contactSubmit.disabled = true;
     contactStatus.textContent = "Sending your message…";
 
     try {
+        if (photoFile) {
+            payload.photo = {
+                type: photoFile.type,
+                content: await encodeFileAsBase64(photoFile),
+            };
+        }
         const response = await fetch("/api/contact", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
