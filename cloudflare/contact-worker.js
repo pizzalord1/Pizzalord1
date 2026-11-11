@@ -77,8 +77,13 @@ export default {
         if (!name || !message || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !turnstileToken) {
             return jsonResponse({ error: "Please check the form and CAPTCHA, then try again." }, 400);
         }
-        if (!env.TURNSTILE_SECRET_KEY || !env.CONTACT_RECIPIENT || !env.EMAIL) {
-            console.error("Contact Worker is missing a required secret or email binding.");
+        const missingConfiguration = [
+            !env.TURNSTILE_SECRET_KEY && "TURNSTILE_SECRET_KEY",
+            !env.CONTACT_RECIPIENT && "CONTACT_RECIPIENT",
+            !env.EMAIL && "EMAIL",
+        ].filter(Boolean);
+        if (missingConfiguration.length > 0) {
+            console.error("Contact Worker is missing configuration:", missingConfiguration);
             return jsonResponse({ error: "The contact service is not configured yet." }, 503);
         }
 

@@ -1,7 +1,8 @@
-name = "pizzalord-contact"
+name = "contact"
 main = "cloudflare/contact-worker.js"
-compatibility_date = "2026-10-15"
-workers_dev = false
+compatibility_date = "2026-11-10"
+workers_dev = true
+preview_urls = false
 
 routes = [
     { pattern = "pizzalord.online/api/contact*", zone_name = "pizzalord.online" }
@@ -9,7 +10,14 @@ routes = [
 
 [vars]
 SENDER_EMAIL = "contact@pizzalord.online"
-CONTACT_RECIPIENT = "contact@pizzalord.online"
+
+[observability]
+enabled = true
+
+[observability.logs]
+enabled = true
+invocation_logs = true
+persist = true
 
 [[send_email]]
 name = "EMAIL"
