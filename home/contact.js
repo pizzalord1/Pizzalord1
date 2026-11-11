@@ -11,6 +11,7 @@ let turnstileWidgetId;
 let turnstileLoadPromise;
 let contactDialogClosing = false;
 let contactDialogCloseAnimationEnd;
+let contactDialogCloseTimeout;
 
 function loadTurnstile() {
     if (window.turnstile) {
@@ -98,6 +99,8 @@ contactDialog.addEventListener("cancel", (event) => {
 });
 
 contactDialog.addEventListener("close", () => {
+    window.clearTimeout(contactDialogCloseTimeout);
+    contactDialogCloseTimeout = undefined;
     if (contactDialogCloseAnimationEnd) {
         contactDialog.removeEventListener("animationend", contactDialogCloseAnimationEnd);
         contactDialogCloseAnimationEnd = undefined;
@@ -161,6 +164,7 @@ contactForm.addEventListener("submit", async (event) => {
         contactForm.reset();
         turnstile.reset(turnstileWidgetId);
         contactStatus.textContent = "Thanks, your message has been sent.";
+        contactDialogCloseTimeout = window.setTimeout(closeContactDialog, 3000);
     } catch (error) {
         console.error("Contact form submission failed:", error);
         if (error instanceof TypeError) {
