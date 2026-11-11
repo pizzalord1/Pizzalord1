@@ -9,6 +9,8 @@ const isLocalPreview = ["localhost", "127.0.0.1", "::1", "[::1]"].includes(windo
 const localPreviewMessage = "The contact form can only be sent from pizzalord.online.";
 let turnstileWidgetId;
 let turnstileLoadPromise;
+let contactDialogClosing = false;
+let contactDialogCloseAnimationEnd;
 
 function loadTurnstile() {
     if (window.turnstile) {
@@ -64,14 +66,51 @@ contactTrigger.addEventListener("click", async () => {
     }
 });
 
+function closeContactDialog() {
+    if (!contactDialog.open || contactDialogClosing) {
+        return;
+    }
+
+    contactDialogClosing = true;
+    contactDialog.classList.add("is-closing");
+    contactDialogCloseAnimationEnd = (event) => {
+        if (event.target !== contactDialog || event.animationName !== "discord-contact-disappear") {
+            return;
+        }
+
+        contactDialog.removeEventListener("animationend", contactDialogCloseAnimationEnd);
+        contactDialog.classList.remove("is-closing");
+        contactDialogCloseAnimationEnd = undefined;
+        contactDialogClosing = false;
+        contactDialog.close();
+    };
+    contactDialog.addEventListener("animationend", contactDialogCloseAnimationEnd);
+}
+
+contactDialog.querySelector("form[method='dialog']").addEventListener("submit", (event) => {
+    event.preventDefault();
+    closeContactDialog();
+});
+
+contactDialog.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    closeContactDialog();
+});
+
 contactDialog.addEventListener("close", () => {
+    if (contactDialogCloseAnimationEnd) {
+        contactDialog.removeEventListener("animationend", contactDialogCloseAnimationEnd);
+        contactDialogCloseAnimationEnd = undefined;
+    }
+    contactDialog.classList.remove("is-closing");
+    contactDialogClosing = false;
     contactTrigger.setAttribute("aria-expanded", "false");
     contactTrigger.focus();
 });
 
 contactDialog.addEventListener("click", (event) => {
     if (event.target === contactDialog) {
-        contactDialog.close();
+        closeContactDialog();
     }
 });
 

@@ -816,18 +816,18 @@ pre {
         opacity: 0;
     }
 
-    @keyframes discord-contact-backdrop-disappear {
-        from {
-            opacity: 1;
-        }
+    to {
+        opacity: 1;
+    }
+}
 
-        to {
-            opacity: 0;
-        }
+@keyframes discord-contact-backdrop-disappear {
+    from {
+        opacity: 1;
     }
 
     to {
-        opacity: 1;
+        opacity: 0;
     }
 }
 
@@ -842,10 +842,17 @@ pre {
         --discord-dialog-enter-duration: 160ms;
     }
 
+    .contact-dialog {
+        --discord-dialog-enter-offset: 0.5rem;
+        --discord-dialog-enter-duration: 160ms;
+    }
+
     .discord-contact-dialog[open],
     .discord-contact-dialog::backdrop,
     .photo-description-dialog[open],
-    .photo-description-dialog::backdrop {
+    .photo-description-dialog::backdrop,
+    .contact-dialog[open],
+    .contact-dialog::backdrop {
         animation-duration: var(--discord-dialog-enter-duration);
     }
 }
@@ -909,6 +916,8 @@ pre {
 .contact-dialog {
     width: min(90vw, 32rem);
     max-height: min(90vh, 48rem);
+    --discord-dialog-enter-offset: 2.5rem;
+    --discord-dialog-enter-duration: 320ms;
     overflow-y: auto;
     padding: 1.5rem;
     color: #fff;
@@ -919,23 +928,20 @@ pre {
 }
 
 .contact-dialog[open] {
-    animation: contact-dialog-appear 180ms ease both;
+    animation: discord-contact-appear var(--discord-dialog-enter-duration) ease both;
 }
 
 .contact-dialog::backdrop {
     background: rgba(0, 0, 0, 0.55);
+    animation: discord-contact-backdrop-appear var(--discord-dialog-enter-duration) ease both;
 }
 
-@keyframes contact-dialog-appear {
-    from {
-        opacity: 0;
-        transform: translateY(0.75rem) scale(0.98);
-    }
+.contact-dialog.is-closing[open] {
+    animation: discord-contact-disappear var(--discord-dialog-enter-duration) ease both;
+}
 
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+.contact-dialog.is-closing::backdrop {
+    animation: discord-contact-backdrop-disappear var(--discord-dialog-enter-duration) ease both;
 }
 
 .contact-close {
@@ -992,12 +998,6 @@ pre {
 .contact-status {
     min-height: 1.5em;
     margin: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .contact-dialog[open] {
-        animation-duration: 1ms;
-    }
 }
 
 .site-error-dialog {
