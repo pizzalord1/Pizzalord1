@@ -1,4 +1,5 @@
-name = "contact"
+# wrangler.toml
+name = 'pizzalord1'
 main = "cloudflare/contact-worker.js"
 compatibility_date = "2026-11-10"
 workers_dev = true
