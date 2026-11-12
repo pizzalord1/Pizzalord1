@@ -970,6 +970,29 @@ pre {
     border-radius: 8px;
 }
 
+.contact-photo-dropzone {
+    display: grid;
+    gap: 0.65rem;
+    padding: 0.75rem;
+    border: 2px dashed rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.contact-photo-dropzone.is-dragging {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #fff;
+}
+
+.contact-photo-dropzone input[type="file"] {
+    padding: 0.5rem;
+}
+
+.contact-photo-selection {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
 .contact-form input:focus-visible,
 .contact-form textarea:focus-visible {
     outline: 3px solid #fff;

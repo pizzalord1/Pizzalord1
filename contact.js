@@ -5,11 +5,14 @@ const contactForm = document.querySelector("#contactForm");
 const contactStatus = document.querySelector("#contactStatus");
 const contactSubmit = contactForm.querySelector(".contact-submit");
 const contactPhoto = document.querySelector("#contactPhoto");
+const contactPhotoDropZone = document.querySelector("#contactPhotoDropZone");
+const contactPhotoSelection = document.querySelector("#contactPhotoSelection");
 const contactTurnstile = document.querySelector("#contactTurnstile");
 const isLocalPreview = ["localhost", "127.0.0.1", "::1", "[::1]"].includes(window.location.hostname);
 const localPreviewMessage = "The contact form can only be sent from pizzalord.online.";
 const maxContactPhotoBytes = 3 * 1024 * 1024;
 const allowedContactPhotoTypes = ["image/jpeg", "image/png", "image/webp"];
+let selectedContactPhoto = null;
 let turnstileWidgetId;
 let turnstileLoadPromise;
 let contactDialogClosing = false;
@@ -24,6 +27,92 @@ async function encodeFileAsBase64(file) {
     }
     return btoa(binary);
 }
+
+async function detectContactPhotoType(file) {
+    const bytes = new Uint8Array(await file.slice(0, 12).arrayBuffer());
+    if (bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff) {
+        return "image/jpeg";
+    }
+    if (
+        bytes.length >= 8
+        && bytes[0] === 0x89
+        && bytes[1] === 0x50
+        && bytes[2] === 0x4e
+        && bytes[3] === 0x47
+        && bytes[4] === 0x0d
+        && bytes[5] === 0x0a
+        && bytes[6] === 0x1a
+        && bytes[7] === 0x0a
+    ) {
+        return "image/png";
+    }
+    if (
+        bytes.length >= 12
+        && String.fromCharCode(...bytes.subarray(0, 4)) === "RIFF"
+        && String.fromCharCode(...bytes.subarray(8, 12)) === "WEBP"
+    ) {
+        return "image/webp";
+    }
+    return "";
+}
+
+function setSelectedContactPhoto(file) {
+    selectedContactPhoto = file || null;
+    contactPhotoSelection.textContent = file
+        ? file.name + " (" + Math.ceil(file.size / 1024) + " KB). Checking image…"
+        : "No photo selected.";
+
+    if (!file) {
+        return;
+    }
+
+    if (file.size > maxContactPhotoBytes) {
+        contactPhotoSelection.textContent = "That photo is larger than 3 MB. Choose a smaller image.";
+        return;
+    }
+
+    detectContactPhotoType(file).then((type) => {
+        if (selectedContactPhoto !== file) {
+            return;
+        }
+        contactPhotoSelection.textContent = type && allowedContactPhotoTypes.includes(type)
+            ? file.name + " (" + Math.ceil(file.size / 1024) + " KB). " + type.replace("image/", "").toUpperCase() + " ready."
+            : "That file is not a supported JPEG, PNG, or WebP image.";
+    }).catch(() => {
+        if (selectedContactPhoto === file) {
+            contactPhotoSelection.textContent = "Could not read that photo. Try choosing it again.";
+        }
+    });
+}
+
+contactPhoto.addEventListener("change", () => {
+    setSelectedContactPhoto(contactPhoto.files[0]);
+});
+
+["dragenter", "dragover"].forEach((eventName) => {
+    contactPhotoDropZone.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "copy";
+        contactPhotoDropZone.classList.add("is-dragging");
+    });
+});
+
+["dragleave", "drop"].forEach((eventName) => {
+    contactPhotoDropZone.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        if (eventName === "drop" || !contactPhotoDropZone.contains(event.relatedTarget)) {
+            contactPhotoDropZone.classList.remove("is-dragging");
+        }
+    });
+});
+
+contactPhotoDropZone.addEventListener("drop", (event) => {
+    setSelectedContactPhoto(event.dataTransfer.files[0]);
+});
+
+contactForm.addEventListener("reset", () => {
+    setSelectedContactPhoto(null);
+});
 
 function loadTurnstile() {
     if (window.turnstile) {
@@ -137,10 +226,23 @@ contactForm.addEventListener("submit", async (event) => {
         contactStatus.textContent = localPreviewMessage;
         return;
     }
-    const photoFile = contactPhoto.files[0];
-    if (photoFile && (!allowedContactPhotoTypes.includes(photoFile.type) || photoFile.size > maxContactPhotoBytes)) {
-        contactStatus.textContent = "Choose a JPEG, PNG, or WebP photo no larger than 3 MB.";
-        return;
+    const photoFile = selectedContactPhoto || contactPhoto.files[0];
+    let photoType = "";
+    if (photoFile) {
+        if (photoFile.size > maxContactPhotoBytes) {
+            contactStatus.textContent = "Choose a JPEG, PNG, or WebP photo no larger than 3 MB.";
+            return;
+        }
+        try {
+            photoType = await detectContactPhotoType(photoFile);
+        } catch (error) {
+            contactStatus.textContent = "Could not read the selected photo. Please choose it again.";
+            return;
+        }
+        if (!allowedContactPhotoTypes.includes(photoType)) {
+            contactStatus.textContent = "Choose a valid JPEG, PNG, or WebP photo no larger than 3 MB. The file extension does not matter.";
+            return;
+        }
     }
     const turnstile = window.turnstile;
     if (!CONTACT_TURNSTILE_SITE_KEY || !turnstile || turnstileWidgetId === undefined) {
@@ -169,7 +271,7 @@ contactForm.addEventListener("submit", async (event) => {
     try {
         if (photoFile) {
             payload.photo = {
-                type: photoFile.type,
+                type: photoType,
                 content: await encodeFileAsBase64(photoFile),
             };
         }
