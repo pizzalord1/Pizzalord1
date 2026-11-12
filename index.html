@@ -3,12 +3,12 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <script src="error-log.js"></script>
+   <script src="error-log.js" defer></script>
    <base href="/">
    <meta name="description" content="Welcome to Pizzalord.online - you can download my minecraft worlds here and view other links i have listed here.">
-   <link rel="canonical" href="https://pizzalord.online/">
+   <link rel="canonical" href="https://pizzalord.online/index.html">
    <meta property="og:type" content="website">
-   <meta property="og:url" content="https://pizzalord.online/">
+   <meta property="og:url" content="https://pizzalord.online/index.html">
    <meta property="og:title" content="Pizzalord.online">
    <meta property="og:description" content="This is my website, you can download my minecraft worlds here and view other links i have listed here.">
    <meta property="og:image" content="https://pizzalord.online/IMG_2094-share.jpg">
@@ -29,19 +29,16 @@
            <input class="carousel-slide-toggle" type="radio" name="cat-photo-slide" id="catPhotoSlide2" aria-label="Show slide 2 of 4: Junior" aria-controls="catPhotoPanel2">
            <input class="carousel-slide-toggle" type="radio" name="cat-photo-slide" id="catPhotoSlide3" aria-label="Show slide 3 of 4: Nigel" aria-controls="catPhotoPanel3">
            <input class="carousel-slide-toggle" type="radio" name="cat-photo-slide" id="catPhotoSlide4" aria-label="Show slide 4 of 4: Harley" aria-controls="catPhotoPanel4">
-           <div class="carousel-indicators">
-               <label for="catPhotoSlide1" aria-label="Show slide 1: Omlette"></label>
-               <label for="catPhotoSlide2" aria-label="Show slide 2: Junior"></label>
-               <label for="catPhotoSlide3" aria-label="Show slide 3: Nigel"></label>
-               <label for="catPhotoSlide4" aria-label="Show slide 4: Harley"></label>
+           <div class="carousel-indicators" aria-hidden="true">
+               <label for="catPhotoSlide1"></label>
+               <label for="catPhotoSlide2"></label>
+               <label for="catPhotoSlide3"></label>
+               <label for="catPhotoSlide4"></label>
            </div>
            <div class="carousel-inner">
                <div class="carousel-item" id="catPhotoPanel1" role="group" aria-roledescription="slide" aria-label="Slide 1 of 4: Omlette">
                    <button class="photo-trigger" type="button" data-description="Taken in March 2026 on a iPhone 16 Pro.">
-                       <picture>
-                           <source srcset="IMG_4303.jxl" type="image/jxl">
-                           <img class="website-photo" src="IMG_4303.JPG" alt="Omlette" width="463" height="824" loading="eager" fetchpriority="high" decoding="async" data-download="IMG_4303.JPG">
-                       </picture>
+                       <img class="website-photo" src="IMG_4303-275.webp" srcset="IMG_4303-160.webp 160w, IMG_4303-275.webp 275w, IMG_4303-320.webp 320w, IMG_4303-463.webp 463w" sizes="(max-width: 510px) 157px, (max-width: 945px) 30.25vw, 292px" alt="Omlette" width="463" height="824" loading="eager" fetchpriority="high" decoding="async" data-download="IMG_4303.JPG">
                    </button>
                </div>
                <div class="carousel-item" id="catPhotoPanel2" role="group" aria-roledescription="slide" aria-label="Slide 2 of 4: Junior">
@@ -94,12 +91,12 @@
    <main class="links home-links" id="main-content">
        <a class="basicButton" href="Minecraft Worlds.html" >Download my Minecraft World</a>
    <a class="basicButton" href="linkshrub.html" >Link.shrub /!\ under construction /!\</a>
-    <a class="basicButton" href="access-denied.html" style="color: rgb(117, 0, 0);">Access Denied</a>
+    <a class="basicButton" href="access-denied.html" style="color: #4b0000;">Access Denied</a>
        <a class="basicButton" href="socials.html" >My socials</a>
        <a class="basicButton" href="oldprocessinglinks.html" >Old processing projects</a>
    </main>
 
-    <footer class="site-footer" style="color: black;">
+    <footer class="site-footer" style="color: white;">
         <div class="site-footer-content">
             <nav class="site-footer-links" aria-label="Footer navigation">
                 <div class="site-footer-link">
@@ -157,8 +154,8 @@
             </div>
         </div>
     </dialog>
-    <script src="search.js"></script>
-    <script src="photo-description.js"></script>
+    <script src="search.js" defer></script>
+    <script src="photo-description.js" defer></script>
     <script src="contact.js" defer></script>
 
    
