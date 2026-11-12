@@ -56,6 +56,46 @@ async function detectContactPhotoType(file) {
     return "";
 }
 
+async function prepareContactPhoto(file, type) {
+    if (type !== "image/webp") {
+        return { file, type };
+    }
+
+    const bitmap = await createImageBitmap(file);
+    try {
+        const maxDimension = 2048;
+        const scale = Math.min(1, maxDimension / Math.max(bitmap.width, bitmap.height));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+        canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+        const context = canvas.getContext("2d");
+        if (!context) {
+            throw new Error("Your browser could not prepare the WebP photo. Please choose a JPEG or PNG instead.");
+        }
+
+        context.fillStyle = "#fff";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+        const jpeg = await new Promise((resolve, reject) => {
+            canvas.toBlob((blob) => {
+                if (blob) {
+                    resolve(blob);
+                } else {
+                    reject(new Error("Your browser could not convert the WebP photo. Please choose a JPEG or PNG instead."));
+                }
+            }, "image/jpeg", 0.9);
+        });
+        if (jpeg.size > maxContactPhotoBytes) {
+            throw new Error("The converted photo is larger than 3 MB. Please choose a smaller image.");
+        }
+
+        const filename = file.name.replace(/\.[^.]+$/, "") + ".jpg";
+        return { file: new File([jpeg], filename, { type: "image/jpeg" }), type: "image/jpeg" };
+    } finally {
+        bitmap.close();
+    }
+}
+
 function setSelectedContactPhoto(file) {
     selectedContactPhoto = file || null;
     contactPhotoSelection.textContent = file
@@ -76,7 +116,8 @@ function setSelectedContactPhoto(file) {
             return;
         }
         contactPhotoSelection.textContent = type && allowedContactPhotoTypes.includes(type)
-            ? file.name + " (" + Math.ceil(file.size / 1024) + " KB). " + type.replace("image/", "").toUpperCase() + " ready."
+            ? file.name + " (" + Math.ceil(file.size / 1024) + " KB). "
+                + (type === "image/webp" ? "WEBP will be sent as JPEG." : type.replace("image/", "").toUpperCase() + " ready.")
             : "That file is not a supported JPEG, PNG, or WebP image.";
     }).catch(() => {
         if (selectedContactPhoto === file) {
@@ -266,13 +307,17 @@ contactForm.addEventListener("submit", async (event) => {
     };
 
     contactSubmit.disabled = true;
-    contactStatus.textContent = "Sending your message…";
+    contactStatus.textContent = photoType === "image/webp"
+        ? "Preparing your photo…"
+        : "Sending your message…";
 
     try {
         if (photoFile) {
+            const preparedPhoto = await prepareContactPhoto(photoFile, photoType);
+            contactStatus.textContent = "Sending your message…";
             payload.photo = {
-                type: photoType,
-                content: await encodeFileAsBase64(photoFile),
+                type: preparedPhoto.type,
+                content: await encodeFileAsBase64(preparedPhoto.file),
             };
         }
         const response = await fetch("/api/contact", {
