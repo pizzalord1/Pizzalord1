@@ -1014,6 +1014,16 @@ pre {
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.45);
 }
 
+.site-error-trigger {
+    position: fixed;
+    z-index: 20;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    margin: 0;
+    font: inherit;
+    opacity: 0.85;
+}
+
 .site-error-dialog[open] {
     animation: discord-contact-appear var(--discord-dialog-enter-duration) ease both;
 }
@@ -1043,23 +1053,43 @@ pre {
 }
 
 .site-error-close,
-.site-error-clear {
+.site-error-clear,
+.site-error-copy {
     margin: 0;
     font: inherit;
 }
 
-.site-error-list {
+.site-error-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.site-error-report {
+    display: block;
+    width: 100%;
+    min-height: 12rem;
     max-height: 45vh;
-    overflow-y: auto;
-    padding-left: 2rem;
+    resize: vertical;
+    padding: 0.75rem;
+    color: #fff;
+    font: 0.85rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    border-radius: 8px;
 }
 
-.site-error-list li {
+.site-error-report:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+}
+
+.site-error-copy-status {
+    min-height: 1.5em;
     margin: 0.5rem 0;
-    overflow-wrap: anywhere;
 }
 
-.site-error-empty[hidden] {
+.site-error-copy-status:empty {
     display: none;
 }
 

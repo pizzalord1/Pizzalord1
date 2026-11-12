@@ -22,6 +22,9 @@
         issues.push(message);
         notice.textContent = "Compatibility notice: " + issues.join(" ");
         notice.style.display = "block";
+        if (window.siteErrorLog) {
+            window.siteErrorLog.record("Compatibility", message);
+        }
     }
 
     function checkFeatures() {
@@ -65,13 +68,13 @@
         if (target && target.tagName) {
             var tagName = target.tagName.toLowerCase();
             if (tagName === "script" || tagName === "link" || tagName === "img") {
-                showIssue("A page resource failed to load. Some content or interactive features may be unavailable.");
+                showIssue("A page resource failed to load. Some content or interactive features may be unavailable. Open the Error log for details.");
                 return;
             }
         }
 
         if (event.message) {
-            showIssue("Some interactive features failed to run. Try updating your browser.");
+            showIssue("Some interactive features failed to run. Open the Error log for details.");
         }
     }, true);
 
