@@ -70,7 +70,7 @@ function getPhotoAttachment(photo) {
     }
 
     return {
-        content,
+        content: bytes,
         filename: `contact-photo.${extension}`,
         type: photo.type,
         disposition: "attachment",
