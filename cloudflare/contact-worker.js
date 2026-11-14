@@ -70,7 +70,7 @@ function getPhotoAttachment(photo) {
     }
 
     return {
-        content,
+        content: bytes,
         filename: `contact-photo.${extension}`,
         type: photo.type,
         disposition: "attachment",
@@ -175,7 +175,7 @@ export default {
             await env.EMAIL.send(emailMessage);
         } catch (error) {
             console.error("Contact message could not be processed:", error);
-            return jsonResponse({ error: "Your message could not be sent. Please try again later." }, 502);
+            return jsonResponse({ error: "An error has occured, and your message could not be sent. Try again later" }, 502);
         }
 
         return jsonResponse({ success: true });

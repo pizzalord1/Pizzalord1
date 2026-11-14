@@ -970,6 +970,29 @@ pre {
     border-radius: 8px;
 }
 
+.contact-photo-dropzone {
+    display: grid;
+    gap: 0.65rem;
+    padding: 0.75rem;
+    border: 2px dashed rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.contact-photo-dropzone.is-dragging {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #fff;
+}
+
+.contact-photo-dropzone input[type="file"] {
+    padding: 0.5rem;
+}
+
+.contact-photo-selection {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
 .contact-form input:focus-visible,
 .contact-form textarea:focus-visible {
     outline: 3px solid #fff;
@@ -1014,6 +1037,16 @@ pre {
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.45);
 }
 
+.site-error-trigger {
+    position: fixed;
+    z-index: 20;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    margin: 0;
+    font: inherit;
+    opacity: 0.85;
+}
+
 .site-error-dialog[open] {
     animation: discord-contact-appear var(--discord-dialog-enter-duration) ease both;
 }
@@ -1043,23 +1076,43 @@ pre {
 }
 
 .site-error-close,
-.site-error-clear {
+.site-error-clear,
+.site-error-copy {
     margin: 0;
     font: inherit;
 }
 
-.site-error-list {
+.site-error-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.site-error-report {
+    display: block;
+    width: 100%;
+    min-height: 12rem;
     max-height: 45vh;
-    overflow-y: auto;
-    padding-left: 2rem;
+    resize: vertical;
+    padding: 0.75rem;
+    color: #fff;
+    font: 0.85rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    border-radius: 8px;
 }
 
-.site-error-list li {
+.site-error-report:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+}
+
+.site-error-copy-status {
+    min-height: 1.5em;
     margin: 0.5rem 0;
-    overflow-wrap: anywhere;
 }
 
-.site-error-empty[hidden] {
+.site-error-copy-status:empty {
     display: none;
 }
 
@@ -1073,4 +1126,25 @@ pre {
     .site-error-dialog::backdrop {
         animation-duration: var(--discord-dialog-enter-duration);
     }
+}
+
+.capstone-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: min(100%, 28rem);
+    margin: 2rem auto 1rem;
+}
+
+.capstone-links-main {
+   display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 44px;
+    margin: 0;
+    padding: 0.75rem 1rem;
+    text-align: center;
+    overflow-wrap: anywhere;
 }

@@ -7,3 +7,4 @@ Custom domain: https://pizzalord.online/
 
 This site uses Cloudflare technology.
 
+The static website is published from the repository root. The contact form's Cloudflare Worker is in `cloudflare/`.
