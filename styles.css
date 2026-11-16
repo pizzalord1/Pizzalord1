@@ -98,7 +98,7 @@ body {
 
 @media (hover: hover) and (pointer: fine) {
     .basicButton:hover,
-    button:not(.discord-status-trigger):not(.basicButton):hover,
+    button:not(.discord-status-trigger):not(.basicButton):not(.compatibility-notice-close):hover,
     .carousel-control-prev:hover,
     .carousel-control-next:hover {
         transform: scale(1.05);
