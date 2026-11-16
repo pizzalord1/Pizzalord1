@@ -327,6 +327,10 @@ iframe {
     max-width: 100%;
 }
 
+.spotify-embed iframe {
+    border: 0;
+}
+
 .website-photo {
     display: block;
     width: auto;
@@ -642,7 +646,7 @@ pre {
     .spotify-embed iframe {
         display: block;
         width: 100%;
-        height: 352px;
+        height: 234px;
     }
 
     .site-footer-links {
