@@ -5,6 +5,18 @@
     }
 
     var issues = [];
+    var dismissed = false;
+    var messageElement = document.createElement("span");
+    messageElement.textContent = notice.textContent;
+    notice.textContent = "";
+    notice.appendChild(messageElement);
+
+    var closeButton = document.createElement("button");
+    closeButton.type = "button";
+    closeButton.className = "compatibility-notice-close";
+    closeButton.setAttribute("aria-label", "Dismiss compatibility notice");
+    closeButton.textContent = "\u00d7";
+    notice.appendChild(closeButton);
 
     function addEvent(target, name, handler, capture) {
         if (target.addEventListener) {
@@ -14,18 +26,23 @@
         }
     }
 
-    function showIssue(message) {
-        if (issues.indexOf(message) !== -1) {
+    function showIssue(issue) {
+        if (issues.indexOf(issue) !== -1) {
             return;
         }
 
-        issues.push(message);
-        notice.textContent = "Compatibility notice: " + issues.join(" ");
-        notice.style.display = "block";
+        issues.push(issue);
+        messageElement.textContent = "Compatibility notice: " + issues.join(" ");
+        notice.style.display = dismissed ? "none" : "block";
         if (window.siteErrorLog) {
-            window.siteErrorLog.record("Compatibility", message);
+            window.siteErrorLog.record("Compatibility", issue);
         }
     }
+
+    addEvent(closeButton, "click", function () {
+        dismissed = true;
+        notice.style.display = "none";
+    });
 
     function checkFeatures() {
         var canvases = document.getElementsByTagName("canvas");
