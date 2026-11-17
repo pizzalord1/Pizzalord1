@@ -172,9 +172,14 @@ button:not(.discord-status-trigger):not(.basicButton) {
     margin: 0;
 }
 
+.access-denied-link {
+    color: #4b0000;
+}
+
 .site-footer {
     margin: 3rem auto 0;
     padding: 1rem;
+    color: #fff;
     border-top: 1px solid rgba(0, 0, 0, 0.5);
     text-align: center;
 }
