@@ -264,6 +264,9 @@
 
     function sanitizeErrorMessage(message, error) {
         var detail = message;
+        if (detail === "Script error.") {
+            return "A script error occurred, but the browser withheld its source and details.";
+        }
         if (!detail && error) {
             detail = safeErrorName(error) + ": " + error.message;
         }

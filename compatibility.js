@@ -90,7 +90,7 @@
             }
         }
 
-        if (event.message) {
+        if (event.message && event.message !== "Script error.") {
             showIssue("Some interactive features failed to run. Open the Error log for details.");
         }
     }, true);
