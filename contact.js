@@ -107,7 +107,7 @@ function setSelectedContactPhoto(file) {
     }
 
     if (file.size > maxContactPhotoBytes) {
-        contactPhotoSelection.textContent = "That photo is larger than 3 MB. Choose a smaller image.";
+        contactPhotoSelection.textContent = "photo is larger than 3 MB. choose a smaller image.";
         return;
     }
 
