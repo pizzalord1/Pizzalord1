@@ -39,6 +39,25 @@
         }
     }
 
+    function isCloudflareBeaconResource(resource) {
+        if (!resource) {
+            return false;
+        }
+
+        try {
+            var url = new URL(resource, window.location.href);
+            return (
+                url.hostname === "static.cloudflareinsights.com" &&
+                url.pathname.indexOf("/beacon.min.js") === 0
+            ) || (
+                url.hostname === window.location.hostname &&
+                url.pathname === "/cdn-cgi/rum"
+            );
+        } catch (error) {
+            return false;
+        }
+    }
+
     addEvent(closeButton, "click", function () {
         dismissed = true;
         notice.style.display = "none";
@@ -83,6 +102,10 @@
         event = event || window.event || {};
         var target = event.target || event.srcElement;
         if (target && target.tagName) {
+            if (isCloudflareBeaconResource(target.src || target.href || "")) {
+                return;
+            }
+
             var tagName = target.tagName.toLowerCase();
             if (tagName === "script" || tagName === "link" || tagName === "img") {
                 showIssue("A page resource failed to load. Some content or interactive features may be unavailable. Open the Error log for details.");

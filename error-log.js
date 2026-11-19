@@ -34,6 +34,25 @@
         }
     }
 
+    function isCloudflareBeaconResource(resource) {
+        if (!resource) {
+            return false;
+        }
+
+        try {
+            var url = new URL(resource, window.location.href);
+            return (
+                url.hostname === "static.cloudflareinsights.com" &&
+                url.pathname.indexOf("/beacon.min.js") === 0
+            ) || (
+                url.hostname === window.location.hostname &&
+                url.pathname === "/cdn-cgi/rum"
+            );
+        } catch (error) {
+            return false;
+        }
+    }
+
     function buildReport() {
         var lines = [
             "Website diagnostic report",
@@ -214,6 +233,10 @@
         var target = event.target || event.srcElement;
         if (target && target !== window && target.tagName) {
             var resource = target.src || target.href || "";
+            if (isCloudflareBeaconResource(resource)) {
+                return;
+            }
+
             record(
                 "Resource",
                 "A " + target.tagName.toLowerCase() + " resource failed to load.",
