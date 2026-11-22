@@ -2,6 +2,12 @@ const ALLOWED_ORIGIN = "https://pizzalord.online";
 const ALLOWED_HOSTNAME = "pizzalord.online";
 const MAX_PHOTO_BYTES = 3 * 1024 * 1024;
 const MAX_BODY_BYTES = Math.ceil(MAX_PHOTO_BYTES / 3) * 4 + 64 * 1024;
+const CORS_HEADERS = {
+    "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Vary": "Origin",
+};
 
 function jsonResponse(body, status = 200) {
     return new Response(JSON.stringify(body), {
@@ -9,6 +15,7 @@ function jsonResponse(body, status = 200) {
         headers: {
             "Content-Type": "application/json; charset=utf-8",
             "Cache-Control": "no-store",
+            ...CORS_HEADERS,
         },
     });
 }
@@ -104,6 +111,12 @@ export default {
         if (url.pathname !== "/api/contact") {
             return jsonResponse({ error: "Not found." }, 404);
         }
+        if (request.method === "OPTIONS") {
+            if (request.headers.get("Origin") !== ALLOWED_ORIGIN) {
+                return jsonResponse({ error: "Request origin is not allowed." }, 403);
+            }
+            return new Response(null, { status: 204, headers: CORS_HEADERS });
+        }
         if (request.method !== "POST") {
             return jsonResponse({ error: "Method not allowed." }, 405);
         }
@@ -145,6 +158,7 @@ export default {
         const missingConfiguration = [
             !env.TURNSTILE_SECRET_KEY && "TURNSTILE_SECRET_KEY",
             !env.CONTACT_RECIPIENT && "CONTACT_RECIPIENT",
+            !env.SENDER_EMAIL && "SENDER_EMAIL",
             !env.EMAIL && "EMAIL",
         ].filter(Boolean);
         if (missingConfiguration.length > 0) {
