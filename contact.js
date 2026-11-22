@@ -320,12 +320,21 @@ contactForm.addEventListener("submit", async (event) => {
                 content: await encodeFileAsBase64(preparedPhoto.file),
             };
         }
-        const response = await fetch("/api/contact", {
+        const response = await fetch("https://api.pizzalord.online/api/contact", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
         });
-        const result = await response.json();
+        const responseBody = await response.text();
+        let result;
+        try {
+            result = JSON.parse(responseBody);
+        } catch {
+            if (!response.ok) {
+                throw new Error("The contact service is unavailable (HTTP " + response.status + "). Please try again later.");
+            }
+            throw new Error("The contact service returned an invalid response. Please try again later.");
+        }
 
         if (!response.ok) {
             window.siteErrorLog?.record("Contact form", "The server rejected the submission (HTTP " + response.status + ").");
